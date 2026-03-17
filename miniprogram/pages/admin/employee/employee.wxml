@@ -1,0 +1,35 @@
+<view class="container">
+  <!-- 搜索栏 -->
+  <view class="search-bar">
+    <input class="search-input" placeholder="搜索员工姓名/工号" value="{{keyword}}" bindinput="onSearchInput" />
+    <view class="search-btn" bindtap="handleSearch">搜索</view>
+  </view>
+
+  <!-- 添加按钮 -->
+  <view class="add-btn" bindtap="goToAdd">
+    <text>+ 添加员工</text>
+  </view>
+
+  <!-- 员工列表 -->
+  <view class="list" wx:if="{{employeeList.length > 0}}">
+    <view class="list-item" wx:for="{{employeeList}}" wx:key="id">
+      <view class="employee-avatar">{{item.name ? item.name[0] : '员'}}</view>
+      <view class="employee-info">
+        <view class="employee-name">{{item.name}}</view>
+        <view class="employee-detail">
+          <text>工号：{{item.employeeNo}}</text>
+          <text class="divider">|</text>
+          <text>{{item.departmentName || '未分配'}}</text>
+        </view>
+      </view>
+      <view class="employee-actions">
+        <view class="action-btn edit" bindtap="goToEdit" data-id="{{item.id}}">编辑</view>
+        <view class="action-btn delete" bindtap="handleDelete" data-id="{{item.id}}">删除</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="empty" wx:else>
+    <view class="empty-text">暂无员工数据</view>
+  </view>
+</view>

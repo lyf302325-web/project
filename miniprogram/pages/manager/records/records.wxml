@@ -1,0 +1,92 @@
+<view class="container">
+  <view class="filter-tabs">
+    <view class="tab {{type === 'all' ? 'active' : ''}}" bindtap="switchType" data-type="all">全部</view>
+    <view class="tab {{type === 'leave' ? 'active' : ''}}" bindtap="switchType" data-type="leave">请假</view>
+    <view class="tab {{type === 'fieldwork' ? 'active' : ''}}" bindtap="switchType" data-type="fieldwork">外勤</view>
+    <view class="tab {{type === 'appeal' ? 'active' : ''}}" bindtap="switchType" data-type="appeal">申诉</view>
+    <view class="tab {{type === 'overtime' ? 'active' : ''}}" bindtap="switchType" data-type="overtime">加班</view>
+  </view>
+
+  <view class="list" wx:if="{{list.length > 0}}">
+    <view class="list-item" wx:for="{{list}}" wx:key="id" bindtap="openDetail" data-index="{{index}}">
+      <view class="item-header">
+        <view class="left">
+          <view class="avatar">{{item.applicantName ? item.applicantName[0] : '员'}}</view>
+          <view class="meta">
+            <view class="name">{{item.applicantName}}</view>
+            <view class="sub">{{item.recordTypeName}} · {{item.approverName || ''}}</view>
+          </view>
+        </view>
+        <view class="status status-tag {{item.status === 1 ? 'status-success' : item.status === 2 ? 'status-error' : 'status-normal'}}">
+          {{item.statusName}}
+        </view>
+      </view>
+      <view class="item-content">
+        <view class="line" wx:if="{{item.opinion}}">
+          <text class="label">意见：</text>
+          <text class="value">{{item.opinion}}</text>
+        </view>
+        <view class="line">
+          <text class="label">时间：</text>
+          <text class="value">{{item.approvalTime || item.createTime}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="empty" wx:else>
+    <view class="empty-text">暂无审批记录</view>
+  </view>
+</view>
+
+<view class="modal" wx:if="{{showModal}}">
+  <view class="modal-mask" bindtap="closeModal"></view>
+  <view class="modal-content">
+    <view class="modal-title">审批详情</view>
+    <view class="modal-body" wx:if="{{currentItem}}">
+      <view class="row">
+        <text class="label">申请人</text>
+        <text class="value">{{currentItem.applicantName}}</text>
+      </view>
+      <view class="row">
+        <text class="label">类型</text>
+        <text class="value">{{currentItem.recordTypeName}}</text>
+      </view>
+      <view class="row">
+        <text class="label">状态</text>
+        <text class="value">{{currentItem.statusName}}</text>
+      </view>
+      <view class="row" wx:if="{{currentItem.recordType === 'leave'}}">
+        <text class="label">请假时间</text>
+        <text class="value">{{currentItem.startDate}} 至 {{currentItem.endDate}} ({{currentItem.days}}天)</text>
+      </view>
+      <view class="row" wx:if="{{currentItem.recordType === 'fieldwork'}}">
+        <text class="label">外勤日期</text>
+        <text class="value">{{currentItem.fieldworkDate}}</text>
+      </view>
+      <view class="row" wx:if="{{currentItem.recordType === 'appeal'}}">
+        <text class="label">考勤日期</text>
+        <text class="value">{{currentItem.attendanceDate}}</text>
+      </view>
+      <view class="row" wx:if="{{currentItem.recordType === 'overtime'}}">
+        <text class="label">加班时间</text>
+        <text class="value">{{currentItem.startTime}} 至 {{currentItem.endTime}} ({{currentItem.hours}}小时)</text>
+      </view>
+      <view class="row">
+        <text class="label">事由</text>
+        <text class="value">{{currentItem.reason}}</text>
+      </view>
+      <view class="row" wx:if="{{currentItem.opinion}}">
+        <text class="label">审批意见</text>
+        <text class="value">{{currentItem.opinion}}</text>
+      </view>
+      <view class="row">
+        <text class="label">审批时间</text>
+        <text class="value">{{currentItem.approvalTime || currentItem.createTime}}</text>
+      </view>
+    </view>
+    <view class="modal-footer">
+      <button class="modal-btn confirm" bindtap="closeModal">关闭</button>
+    </view>
+  </view>
+</view>

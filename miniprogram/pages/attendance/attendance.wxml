@@ -1,0 +1,76 @@
+<view class="container">
+  <!-- 月份选择 -->
+  <view class="month-picker">
+    <view class="arrow" bindtap="prevMonth">◀</view>
+    <view class="month-text">{{currentYear}}年{{currentMonth}}月</view>
+    <view class="arrow" bindtap="nextMonth">▶</view>
+  </view>
+
+  <!-- 月度统计 -->
+  <view class="card stats-card">
+    <view class="stat-row">
+      <view class="stat-item">
+        <view class="stat-value success">{{monthStats.normalDays || 0}}</view>
+        <view class="stat-label">正常</view>
+      </view>
+      <view class="stat-item">
+        <view class="stat-value warning">{{monthStats.lateDays || 0}}</view>
+        <view class="stat-label">迟到</view>
+      </view>
+      <view class="stat-item">
+        <view class="stat-value warning">{{monthStats.earlyDays || 0}}</view>
+        <view class="stat-label">早退</view>
+      </view>
+      <view class="stat-item">
+        <view class="stat-value">{{monthStats.leaveDays || 0}}</view>
+        <view class="stat-label">请假</view>
+      </view>
+      <view class="stat-item">
+        <view class="stat-value error">{{monthStats.absentDays || 0}}</view>
+        <view class="stat-label">旷工</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 考勤记录列表 -->
+  <view class="card">
+    <view class="card-header">
+      <view class="card-title">考勤记录</view>
+      <view class="export-btn" bindtap="exportReport">导出报表</view>
+    </view>
+    
+    <view class="record-list" wx:if="{{attendanceList.length > 0}}">
+      <view class="record-item" wx:for="{{attendanceList}}" wx:key="id">
+        <view class="record-date">
+          <view class="date-day">{{item.day}}</view>
+          <view class="date-week">{{item.weekDay}}</view>
+        </view>
+        <view class="record-detail">
+          <view class="time-row">
+            <text class="time-label">签到:</text>
+            <text class="time-value">{{item.checkInTime || '--:--'}}</text>
+            <text class="status-tag {{item.checkInStatus === 0 ? 'status-success' : item.checkInStatus === 1 ? 'status-warning' : 'status-error'}}" wx:if="{{item.checkInTime}}">
+              {{item.checkInStatus === 0 ? '正常' : item.checkInStatus === 1 ? '迟到' : '异常'}}
+            </text>
+          </view>
+          <view class="time-row">
+            <text class="time-label">签退:</text>
+            <text class="time-value">{{item.checkOutTime || '--:--'}}</text>
+            <text class="status-tag {{item.checkOutStatus === 0 ? 'status-success' : item.checkOutStatus === 2 ? 'status-warning' : 'status-error'}}" wx:if="{{item.checkOutTime}}">
+              {{item.checkOutStatus === 0 ? '正常' : item.checkOutStatus === 2 ? '早退' : '异常'}}
+            </text>
+          </view>
+        </view>
+        <view class="record-status">
+          <view class="overall-status {{item.status === 0 ? 'normal' : item.status === 1 ? 'abnormal' : 'leave'}}">
+            {{item.status === 0 ? '正常' : item.status === 1 ? '异常' : item.status === 2 ? '请假' : '旷工'}}
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class="empty" wx:else>
+      <view class="empty-text">暂无考勤记录</view>
+    </view>
+  </view>
+</view>

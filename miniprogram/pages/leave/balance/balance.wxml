@@ -1,0 +1,20 @@
+<view class="container">
+  <view class="card">
+    <view class="card-title">{{year}} 年请假余额</view>
+    <view class="list" wx:if="{{list.length > 0}}">
+      <view class="row" wx:for="{{list}}" wx:key="leaveType">
+        <view class="left">
+          <view class="name">{{item.leaveTypeName}}</view>
+          <view class="sub">总额度 {{item.totalDays || 0}} 天 · 已用 {{item.usedDays || 0}} 天</view>
+        </view>
+        <view class="right">
+          <view class="remain">{{item.remainingDays || 0}}</view>
+          <view class="remain-label">剩余(天)</view>
+        </view>
+      </view>
+    </view>
+    <view class="empty" wx:else>
+      <view class="empty-text">暂无余额数据</view>
+    </view>
+  </view>
+</view>

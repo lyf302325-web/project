@@ -1,0 +1,43 @@
+.container {
+  padding: 20rpx;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.row:last-child {
+  border-bottom: none;
+}
+
+.name {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #333;
+}
+
+.sub {
+  font-size: 24rpx;
+  color: #999;
+  margin-top: 6rpx;
+}
+
+.right {
+  text-align: right;
+}
+
+.remain {
+  font-size: 36rpx;
+  font-weight: 700;
+  color: #1890ff;
+}
+
+.remain-label {
+  font-size: 22rpx;
+  color: #999;
+  margin-top: 4rpx;
+}

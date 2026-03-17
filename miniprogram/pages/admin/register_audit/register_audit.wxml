@@ -1,0 +1,21 @@
+<view class="container">
+  <view class="card" wx:if="{{list.length > 0}}">
+    <view class="item" wx:for="{{list}}" wx:key="id">
+      <view class="info">
+        <view class="name">{{item.name}}</view>
+        <view class="sub">账号：{{item.username}}  工号：{{item.employeeNo}}</view>
+        <view class="sub">部门：{{item.departmentName || (item.departmentId || '未填写')}}</view>
+        <view class="sub">手机号：{{item.phone || '未填写'}}</view>
+      </view>
+      <view class="actions">
+        <button class="btn pass" size="mini" data-id="{{item.id}}" bindtap="handleApprove">通过</button>
+        <button class="btn reject" size="mini" data-id="{{item.id}}" bindtap="handleReject">驳回</button>
+      </view>
+    </view>
+  </view>
+
+  <view class="empty" wx:else>
+    <view class="empty-text">暂无待审核注册申请</view>
+    <button class="refresh" bindtap="loadList">刷新</button>
+  </view>
+</view>

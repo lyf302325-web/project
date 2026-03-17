@@ -1,0 +1,62 @@
+<view class="container">
+  <view class="filter-tabs">
+    <view class="tab {{currentTab === 'pending' ? 'active' : ''}}" bindtap="switchTab" data-tab="pending">待终审</view>
+    <view class="tab {{currentTab === 'approved' ? 'active' : ''}}" bindtap="switchTab" data-tab="approved">已通过</view>
+    <view class="tab {{currentTab === 'rejected' ? 'active' : ''}}" bindtap="switchTab" data-tab="rejected">已拒绝</view>
+  </view>
+
+  <view class="card">
+    <view class="card-header">
+      <view class="card-title">加班统计</view>
+      <view class="export-btn" bindtap="exportStats">导出Excel</view>
+    </view>
+    <view class="filter-row">
+      <picker mode="date" value="{{startDate}}" bindchange="onStartDateChange">
+        <view class="filter-input">{{startDate || '开始日期'}} <text class="arrow">▶</text></view>
+      </picker>
+      <picker mode="date" value="{{endDate}}" bindchange="onEndDateChange">
+        <view class="filter-input">{{endDate || '结束日期'}} <text class="arrow">▶</text></view>
+      </picker>
+      <button class="search-btn" bindtap="queryStats">统计</button>
+    </view>
+  </view>
+
+  <view class="list" wx:if="{{list.length > 0}}">
+    <view class="list-item" wx:for="{{list}}" wx:key="id">
+      <view class="item-header">
+        <view class="left">
+          <view class="avatar">{{item.applicantName ? item.applicantName[0] : '员'}}</view>
+          <view class="meta">
+            <view class="name">{{item.applicantName}}</view>
+            <view class="sub">{{item.overtimeTypeName}} · {{item.hours}}小时</view>
+          </view>
+        </view>
+        <view class="status status-tag {{item.status === 3 ? 'status-success' : item.status === 2 ? 'status-error' : 'status-normal'}}">
+          {{item.status === 1 ? '待终审' : item.status === 3 ? '已通过' : '已拒绝'}}
+        </view>
+      </view>
+      <view class="item-content">
+        <view class="line">
+          <text class="label">时间：</text>
+          <text class="value">{{item.startTime}} 至 {{item.endTime}}</text>
+        </view>
+        <view class="line">
+          <text class="label">事由：</text>
+          <text class="value">{{item.reason}}</text>
+        </view>
+      </view>
+
+      <view class="item-actions" wx:if="{{item.status === 1}}">
+        <input class="opinion-input" placeholder="请输入审批意见（可选）" value="{{item.opinion}}" bindinput="onOpinionInput" data-index="{{index}}" />
+        <view class="action-btns">
+          <button class="action-btn reject" bindtap="reject" data-id="{{item.id}}" data-index="{{index}}">拒绝</button>
+          <button class="action-btn approve" bindtap="approve" data-id="{{item.id}}" data-index="{{index}}">通过</button>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="empty" wx:else>
+    <view class="empty-text">暂无数据</view>
+  </view>
+</view>

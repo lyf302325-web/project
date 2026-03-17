@@ -1,0 +1,54 @@
+<view class="login-container">
+  <view class="login-header">
+    <view class="logo">考勤</view>
+    <view class="title">中小企业考勤管理系统</view>
+    <view class="subtitle">高效便捷的考勤解决方案</view>
+  </view>
+
+  <view class="login-form">
+    <view class="form-item">
+      <view class="form-icon">👤</view>
+      <input class="form-input" placeholder="请输入账号" value="{{username}}" bindinput="onUsernameInput" />
+    </view>
+    <view class="form-item">
+      <view class="form-icon">🔒</view>
+      <input class="form-input" placeholder="请输入密码" password="{{!showPassword}}" value="{{password}}" bindinput="onPasswordInput" />
+      <view class="show-pwd" bindtap="togglePassword">{{showPassword ? '隐藏' : '显示'}}</view>
+    </view>
+
+    <button class="login-btn" bindtap="handleLogin" loading="{{loading}}">登 录</button>
+
+    <view class="divider"><text>或</text></view>
+
+    <button class="wx-btn" bindtap="handleWxLogin" loading="{{wxLoading}}">微信一键登录</button>
+  </view>
+
+  <!-- 微信绑定表单 -->
+  <view class="login-form" wx:if="{{showBindForm}}">
+    <view class="bind-header">
+      <view class="bind-title">首次使用微信登录，请绑定已有账号</view>
+      <view class="bind-close" bindtap="cancelBind">✕</view>
+    </view>
+    <view class="form-item">
+      <view class="form-icon">👤</view>
+      <input class="form-input" placeholder="请输入账号" value="{{bindUsername}}" bindinput="onBindUsernameInput" />
+    </view>
+    <view class="form-item">
+      <view class="form-icon">🔒</view>
+      <input class="form-input" placeholder="请输入密码" password="true" value="{{bindPassword}}" bindinput="onBindPasswordInput" />
+    </view>
+    <button class="login-btn" bindtap="handleWxBind" loading="{{bindLoading}}">绑定并登录</button>
+    <view class="footer-row" style="margin-top:16rpx">
+      <text class="link" bindtap="cancelBind">取消</text>
+    </view>
+  </view>
+
+  <view class="login-footer">
+    <view class="footer-row">
+      <text>首次登录请联系管理员获取账号</text>
+    </view>
+    <view class="footer-row">
+      <text class="link" bindtap="goToRegister">注册申请</text>
+    </view>
+  </view>
+</view>

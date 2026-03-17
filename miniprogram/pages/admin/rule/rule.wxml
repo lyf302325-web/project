@@ -1,0 +1,161 @@
+<view class="container">
+  <view class="card">
+    <view class="card-title">考勤组</view>
+
+    <view class="form-item">
+      <view class="form-label">选择考勤组</view>
+      <picker mode="selector" range="{{groups}}" range-key="name" bindchange="onGroupChange">
+        <view class="form-input picker">
+          {{selectedGroupName || '请选择'}}
+          <text class="arrow">▶</text>
+        </view>
+      </picker>
+    </view>
+
+    <view class="group-actions">
+      <button class="btn-outline" bindtap="openAddGroup">新增考勤组</button>
+    </view>
+  </view>
+
+  <view class="card">
+    <view class="card-title">班次列表</view>
+    <view class="shift-list" wx:if="{{ruleList.length > 0}}">
+      <view class="shift-item" wx:for="{{ruleList}}" wx:key="id">
+        <view class="shift-main">
+          <view class="shift-name">{{item.shiftName || '未命名班次'}}</view>
+          <view class="shift-sub">{{item.checkInTime}} - {{item.checkOutTime}} · {{item.enabledText}}</view>
+        </view>
+        <view class="shift-actions">
+          <button class="mini-btn" bindtap="editShift" data-index="{{index}}">编辑</button>
+          <button class="mini-btn primary" wx:if="{{item.enabled != 1}}" bindtap="enableShift" data-id="{{item.id}}">启用</button>
+        </view>
+      </view>
+    </view>
+    <view class="empty" wx:else>
+      <view class="empty-text">暂无班次</view>
+    </view>
+    <button class="location-btn" bindtap="startAddShift">新增班次</button>
+  </view>
+
+  <view class="card">
+    <view class="card-title">考勤时间设置</view>
+
+    <view class="form-item">
+      <view class="form-label">班次名称</view>
+      <input class="form-input" placeholder="如：销售早班" value="{{ruleData.shiftName}}" bindinput="onInput" data-field="shiftName" />
+    </view>
+    
+    <view class="form-item">
+      <view class="form-label">上班时间</view>
+      <picker mode="time" bindchange="onCheckInTimeChange" value="{{ruleData.checkInTime}}">
+        <view class="form-input picker">
+          {{ruleData.checkInTime || '09:00'}}
+          <text class="arrow">▶</text>
+        </view>
+      </picker>
+    </view>
+
+    <view class="form-item">
+      <view class="form-label">下班时间</view>
+      <picker mode="time" bindchange="onCheckOutTimeChange" value="{{ruleData.checkOutTime}}">
+        <view class="form-input picker">
+          {{ruleData.checkOutTime || '18:00'}}
+          <text class="arrow">▶</text>
+        </view>
+      </picker>
+    </view>
+
+    <view class="form-item">
+      <view class="form-label">早签窗口(分钟)</view>
+      <input class="form-input" type="number" placeholder="如：120" value="{{ruleData.earlyCheckInMinutes}}" bindinput="onInput" data-field="earlyCheckInMinutes" />
+    </view>
+
+    <view class="form-item">
+      <view class="form-label">迟到阈值(分钟)</view>
+      <input class="form-input" type="number" placeholder="如：30" value="{{ruleData.lateThreshold}}" bindinput="onInput" data-field="lateThreshold" />
+    </view>
+
+    <view class="form-item">
+      <view class="form-label">早退阈值(分钟)</view>
+      <input class="form-input" type="number" placeholder="如：30" value="{{ruleData.earlyThreshold}}" bindinput="onInput" data-field="earlyThreshold" />
+    </view>
+
+    <view class="form-item">
+      <view class="form-label">晚退窗口(分钟)</view>
+      <input class="form-input" type="number" placeholder="如：240" value="{{ruleData.lateCheckOutMinutes}}" bindinput="onInput" data-field="lateCheckOutMinutes" />
+    </view>
+  </view>
+
+  <view class="card">
+    <view class="card-title">打卡地点设置</view>
+    
+    <view class="form-item">
+      <view class="form-label">公司地址</view>
+      <input class="form-input" placeholder="请输入公司地址" value="{{ruleData.address}}" bindinput="onInput" data-field="address" />
+    </view>
+
+    <view class="form-item">
+      <view class="form-label">经度</view>
+      <input class="form-input" type="digit" placeholder="如：116.404" value="{{ruleData.longitude}}" bindinput="onInput" data-field="longitude" />
+    </view>
+
+    <view class="form-item">
+      <view class="form-label">纬度</view>
+      <input class="form-input" type="digit" placeholder="如：39.915" value="{{ruleData.latitude}}" bindinput="onInput" data-field="latitude" />
+    </view>
+
+    <view class="form-item">
+      <view class="form-label">打卡范围(米)</view>
+      <input class="form-input" type="number" placeholder="如：500" value="{{ruleData.checkInRange}}" bindinput="onInput" data-field="checkInRange" />
+    </view>
+
+    <button class="location-btn" bindtap="getCurrentLocation">获取当前位置</button>
+  </view>
+
+  <view class="card">
+    <view class="card-title">其他设置</view>
+
+    <view class="form-item switch-item">
+      <view class="form-label">启用该班次</view>
+      <switch checked="{{ruleData.enabled}}" bindchange="onEnabledChange" color="#1890ff" />
+    </view>
+    
+    <view class="form-item switch-item">
+      <view class="form-label">开启照片验证</view>
+      <switch checked="{{ruleData.photoVerify}}" bindchange="onPhotoVerifyChange" color="#1890ff" />
+    </view>
+
+    <view class="form-item switch-item">
+      <view class="form-label">外勤报备必填</view>
+      <switch checked="{{ruleData.fieldworkRequired}}" bindchange="onFieldworkRequiredChange" color="#1890ff" />
+    </view>
+  </view>
+
+  <button class="submit-btn" bindtap="handleSubmit" loading="{{loading}}">保存设置</button>
+
+  <view class="card">
+    <view class="card-title">班次分配</view>
+    <view class="tip">选择要绑定到当前考勤组的部门（可多选）</view>
+    <checkbox-group bindchange="onDepartmentCheckboxChange">
+      <view class="dept-item" wx:for="{{departments}}" wx:key="id">
+        <checkbox value="{{item.id}}" checked="{{selectedDepartmentIds.indexOf(String(item.id)) !== -1}}" />
+        <text class="dept-name">{{item.name}}</text>
+      </view>
+    </checkbox-group>
+    <button class="submit-btn small" bindtap="saveGroupAssignment">保存分配</button>
+  </view>
+
+  <view class="modal" wx:if="{{showGroupModal}}">
+    <view class="modal-mask" bindtap="closeAddGroup"></view>
+    <view class="modal-content">
+      <view class="modal-title">新增考勤组</view>
+      <view class="modal-body">
+        <input class="modal-input" placeholder="请输入考勤组名称" value="{{newGroupName}}" bindinput="onNewGroupNameInput" />
+      </view>
+      <view class="modal-footer">
+        <button class="modal-btn cancel" bindtap="closeAddGroup">取消</button>
+        <button class="modal-btn confirm" bindtap="confirmAddGroup">确定</button>
+      </view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,51 @@
+<view class="container">
+  <!-- 添加按钮 -->
+  <view class="add-btn" bindtap="showAddModal">
+    <text>+ 添加部门</text>
+  </view>
+
+  <!-- 部门列表 -->
+  <view class="list" wx:if="{{departmentList.length > 0}}">
+    <view class="list-item" wx:for="{{departmentList}}" wx:key="id">
+      <view class="dept-info">
+        <view class="dept-name">{{item.name}}</view>
+        <view class="dept-manager">负责人：{{item.managerName || '未设置'}}</view>
+      </view>
+      <view class="dept-actions">
+        <view class="action-btn edit" bindtap="showEditModal" data-item="{{item}}">编辑</view>
+        <view class="action-btn delete" bindtap="handleDelete" data-id="{{item.id}}">删除</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="empty" wx:else>
+    <view class="empty-text">暂无部门数据</view>
+  </view>
+</view>
+
+<!-- 添加/编辑弹窗 -->
+<view class="modal" wx:if="{{showModal}}">
+  <view class="modal-mask" bindtap="closeModal"></view>
+  <view class="modal-content">
+    <view class="modal-title">{{isEdit ? '编辑部门' : '添加部门'}}</view>
+    <view class="modal-body">
+      <view class="form-item">
+        <text class="form-label">部门名称</text>
+        <input class="form-input" placeholder="请输入部门名称" value="{{formData.name}}" bindinput="onNameInput" />
+      </view>
+      <view class="form-item">
+        <text class="form-label">负责人</text>
+        <picker mode="selector" range="{{employees}}" range-key="name" bindchange="onManagerChange">
+          <view class="form-input picker">
+            {{formData.managerName || '请选择负责人'}}
+            <text class="arrow">▶</text>
+          </view>
+        </picker>
+      </view>
+    </view>
+    <view class="modal-footer">
+      <button class="modal-btn cancel" bindtap="closeModal">取消</button>
+      <button class="modal-btn confirm" bindtap="handleSubmit">确定</button>
+    </view>
+  </view>
+</view>

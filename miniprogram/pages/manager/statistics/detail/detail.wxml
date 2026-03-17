@@ -1,0 +1,50 @@
+<view class="container">
+  <view class="user-card">
+    <view class="user-avatar">{{empInfo.name ? empInfo.name[0] : '员'}}</view>
+    <view class="user-info">
+      <view class="user-name">{{empInfo.name}}</view>
+      <view class="user-no">工号：{{empInfo.employeeNo}}</view>
+      <view class="user-no" wx:if="{{empInfo.departmentName}}">部门：{{empInfo.departmentName}}</view>
+      <view class="user-no" wx:if="{{empInfo.position}}">岗位：{{empInfo.position}}</view>
+      <view class="user-no" wx:if="{{empInfo.phone}}">电话：{{empInfo.phone}}</view>
+      <view class="user-no" wx:if="{{empInfo.hireDate}}">入职：{{empInfo.hireDate}}</view>
+      <view class="user-no" wx:if="{{empInfo.resignDate}}">离职：{{empInfo.resignDate}}</view>
+    </view>
+    <view class="month-label">{{month}}</view>
+  </view>
+
+  <view class="record-list" wx:if="{{records.length > 0}}">
+    <view class="record-card" wx:for="{{records}}" wx:key="id">
+      <view class="record-date">{{item.attendanceDate}}</view>
+      <view class="record-body">
+        <view class="record-row">
+          <view class="row-label">签到</view>
+          <view class="row-time">{{item.checkInTime || '未签到'}}</view>
+          <view class="row-status status-tag {{item.checkInStatus === 0 ? 'status-success' : item.checkInStatus === 1 ? 'status-warning' : ''}}">
+            {{item.checkInStatus === 0 ? '正常' : item.checkInStatus === 1 ? '迟到' : ''}}
+          </view>
+        </view>
+        <view class="record-photo" wx:if="{{item.checkInPhoto}}" bindtap="previewPhoto" data-url="{{item.checkInPhoto}}">
+          <image src="{{baseUrl + item.checkInPhoto}}" mode="aspectFill" class="photo-img"></image>
+          <text class="photo-label">签到照片</text>
+        </view>
+
+        <view class="record-row">
+          <view class="row-label">签退</view>
+          <view class="row-time">{{item.checkOutTime || '未签退'}}</view>
+          <view class="row-status status-tag {{item.checkOutStatus === 0 ? 'status-success' : item.checkOutStatus === 2 ? 'status-warning' : ''}}">
+            {{item.checkOutStatus === 0 ? '正常' : item.checkOutStatus === 2 ? '早退' : ''}}
+          </view>
+        </view>
+        <view class="record-photo" wx:if="{{item.checkOutPhoto}}" bindtap="previewPhoto" data-url="{{item.checkOutPhoto}}">
+          <image src="{{baseUrl + item.checkOutPhoto}}" mode="aspectFill" class="photo-img"></image>
+          <text class="photo-label">签退照片</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="empty" wx:else>
+    <view class="empty-text">该月暂无考勤记录</view>
+  </view>
+</view>

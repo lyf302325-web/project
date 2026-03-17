@@ -1,0 +1,155 @@
+.container {
+  padding: 20rpx;
+}
+
+.user-card {
+  display: flex;
+  align-items: center;
+  background: linear-gradient(135deg, #1890ff 0%, #36cfc9 100%);
+  border-radius: 16rpx;
+  padding: 30rpx;
+  margin-bottom: 20rpx;
+  color: #fff;
+}
+
+.user-avatar {
+  width: 100rpx;
+  height: 100rpx;
+  background-color: rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40rpx;
+  font-weight: bold;
+}
+
+.user-info {
+  flex: 1;
+  margin-left: 24rpx;
+}
+
+.user-name {
+  font-size: 36rpx;
+  font-weight: bold;
+  margin-bottom: 8rpx;
+}
+
+.user-dept {
+  font-size: 26rpx;
+  opacity: 0.9;
+}
+
+.today-date {
+  font-size: 24rpx;
+  opacity: 0.9;
+}
+
+.attendance-status {
+  display: flex;
+  align-items: center;
+}
+
+.status-item {
+  flex: 1;
+  text-align: center;
+  padding: 20rpx 0;
+}
+
+.status-divider {
+  width: 1rpx;
+  height: 80rpx;
+  background-color: #f0f0f0;
+}
+
+.status-label {
+  font-size: 26rpx;
+  color: #999;
+  margin-bottom: 12rpx;
+}
+
+.status-value {
+  font-size: 30rpx;
+  color: #999;
+  margin-bottom: 8rpx;
+}
+
+.status-value.checked {
+  color: #333;
+  font-weight: 500;
+}
+
+.quick-menu {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.menu-item {
+  width: 25%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20rpx 0;
+}
+
+.menu-icon {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 16rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40rpx;
+  margin-bottom: 12rpx;
+}
+
+.checkin-icon {
+  background-color: #e6f7ff;
+}
+
+.leave-icon {
+  background-color: #fff7e6;
+}
+
+.fieldwork-icon {
+  background-color: #f6ffed;
+}
+
+.appeal-icon {
+  background-color: #fff0f6;
+}
+
+.menu-text {
+  font-size: 24rpx;
+  color: #666;
+}
+
+.month-stats {
+  display: flex;
+}
+
+.stat-item {
+  flex: 1;
+  text-align: center;
+  padding: 16rpx 0;
+}
+
+.stat-value {
+  font-size: 40rpx;
+  font-weight: bold;
+  color: #1890ff;
+  margin-bottom: 8rpx;
+}
+
+.stat-value.warning {
+  color: #faad14;
+}
+
+.stat-value.error {
+  color: #ff4d4f;
+}
+
+.stat-label {
+  font-size: 24rpx;
+  color: #999;
+}

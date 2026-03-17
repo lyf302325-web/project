@@ -1,0 +1,62 @@
+<view class="container">
+  <!-- 时间显示 -->
+  <view class="time-card">
+    <view class="current-time">{{currentTime}}</view>
+    <view class="current-date">{{currentDate}}</view>
+  </view>
+
+  <!-- 打卡按钮 -->
+  <view class="checkin-area">
+    <view class="checkin-btn {{canCheckIn ? 'active' : 'disabled'}}" bindtap="handleCheckin">
+      <view class="btn-text">{{checkType === 'in' ? '签到' : '签退'}}</view>
+      <view class="btn-time">{{ruleInfo.checkInTime || '09:00'}} - {{ruleInfo.checkOutTime || '18:00'}}</view>
+    </view>
+  </view>
+
+  <!-- 照片验证提示 -->
+  <view class="photo-tip" wx:if="{{photoVerify}}">
+    <text>📷 已开启照片考勤，点击打卡后将自动调起前置摄像头拍照</text>
+  </view>
+
+  <!-- 拍照预览 -->
+  <view class="photo-preview" wx:if="{{photoPath}}">
+    <image src="{{photoPath}}" mode="aspectFill" class="preview-img"></image>
+  </view>
+
+  <!-- 定位信息 -->
+  <view class="card">
+    <view class="card-title">当前位置</view>
+    <view class="location-info">
+      <view class="location-icon">📍</view>
+      <view class="location-text">{{location.address || '正在获取位置...'}}</view>
+    </view>
+    <view class="location-status {{locationValid ? 'valid' : 'invalid'}}">
+      {{locationValid ? '在打卡范围内' : '不在打卡范围内'}}
+    </view>
+    <button class="refresh-btn" bindtap="refreshLocation">刷新位置</button>
+  </view>
+
+  <!-- 今日打卡记录 -->
+  <view class="card">
+    <view class="card-title">今日打卡记录</view>
+    <view class="record-list">
+      <view class="record-item" wx:if="{{todayRecord.checkInTime}}">
+        <view class="record-type">签到</view>
+        <view class="record-time">{{todayRecord.checkInTime}}</view>
+        <view class="record-status status-tag {{todayRecord.checkInStatus === 0 ? 'status-success' : 'status-warning'}}">
+          {{todayRecord.checkInStatus === 0 ? '正常' : '迟到'}}
+        </view>
+      </view>
+      <view class="record-item" wx:if="{{todayRecord.checkOutTime}}">
+        <view class="record-type">签退</view>
+        <view class="record-time">{{todayRecord.checkOutTime}}</view>
+        <view class="record-status status-tag {{todayRecord.checkOutStatus === 0 ? 'status-success' : 'status-warning'}}">
+          {{todayRecord.checkOutStatus === 0 ? '正常' : '早退'}}
+        </view>
+      </view>
+      <view class="empty" wx:if="{{!todayRecord.checkInTime && !todayRecord.checkOutTime}}">
+        <view class="empty-text">暂无打卡记录</view>
+      </view>
+    </view>
+  </view>
+</view>

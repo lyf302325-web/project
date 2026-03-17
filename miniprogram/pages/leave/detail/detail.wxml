@@ -1,0 +1,64 @@
+<view class="container">
+  <view class="card">
+    <view class="status-header {{detail.status === 0 ? 'pending' : detail.status === 1 ? 'approved' : 'rejected'}}">
+      <view class="status-text">{{detail.status === 0 ? '审批中' : detail.status === 1 ? '已通过' : '已拒绝'}}</view>
+    </view>
+
+    <view class="info-section">
+      <view class="info-item">
+        <text class="info-label">请假类型</text>
+        <text class="info-value">{{detail.leaveTypeName}}</text>
+      </view>
+      <view class="info-item">
+        <text class="info-label">开始日期</text>
+        <text class="info-value">{{detail.startDate}}</text>
+      </view>
+      <view class="info-item">
+        <text class="info-label">结束日期</text>
+        <text class="info-value">{{detail.endDate}}</text>
+      </view>
+      <view class="info-item">
+        <text class="info-label">请假天数</text>
+        <text class="info-value">{{detail.days}}天</text>
+      </view>
+      <view class="info-item">
+        <text class="info-label">申请时间</text>
+        <text class="info-value">{{detail.createTime}}</text>
+      </view>
+    </view>
+
+    <view class="reason-section">
+      <view class="section-title">请假事由</view>
+      <view class="reason-content">{{detail.reason}}</view>
+    </view>
+
+    <view class="images-section" wx:if="{{detail.images && detail.images.length > 0}}">
+      <view class="section-title">证明材料</view>
+      <view class="image-list">
+        <image wx:for="{{detail.images}}" wx:key="index" src="{{item}}" mode="aspectFill" bindtap="previewImage" data-url="{{item}}"></image>
+      </view>
+    </view>
+  </view>
+
+  <view class="card">
+    <view class="section-title">审批流程</view>
+    <view class="approval-flow">
+      <view class="flow-item" wx:for="{{detail.approvalRecords}}" wx:key="index">
+        <view class="flow-line {{index === detail.approvalRecords.length - 1 ? 'last' : ''}}"></view>
+        <view class="flow-dot {{item.status === 1 ? 'approved' : item.status === 2 ? 'rejected' : 'pending'}}"></view>
+        <view class="flow-content">
+          <view class="flow-header">
+            <text class="flow-name">{{item.approverName}}</text>
+            <text class="flow-status {{item.status === 1 ? 'approved' : item.status === 2 ? 'rejected' : 'pending'}}">
+              {{item.status === 0 ? '待审批' : item.status === 1 ? '已通过' : '已拒绝'}}
+            </text>
+          </view>
+          <view class="flow-time" wx:if="{{item.approvalTime}}">{{item.approvalTime}}</view>
+          <view class="flow-opinion" wx:if="{{item.opinion}}">意见：{{item.opinion}}</view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <button class="cancel-btn" wx:if="{{detail.status === 0}}" bindtap="cancelApply">撤销申请</button>
+</view>

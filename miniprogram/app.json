@@ -1,0 +1,73 @@
+{
+  "pages": [
+    "pages/login/login",
+    "pages/register/register",
+    "pages/index/index",
+    "pages/checkin/checkin",
+    "pages/attendance/attendance",
+    "pages/leave/leave",
+    "pages/leave/apply/apply",
+    "pages/leave/detail/detail",
+    "pages/leave/balance/balance",
+    "pages/fieldwork/fieldwork",
+    "pages/fieldwork/apply/apply",
+    "pages/appeal/appeal",
+    "pages/appeal/apply/apply",
+    "pages/overtime/overtime",
+    "pages/overtime/apply/apply",
+    "pages/profile/profile",
+    "pages/admin/index/index",
+    "pages/admin/employee/employee",
+    "pages/admin/employee/edit/edit",
+    "pages/admin/department/department",
+    "pages/admin/rule/rule",
+    "pages/admin/approval/approval",
+    "pages/admin/approval/config/config",
+    "pages/admin/leave_quota/leave_quota",
+    "pages/admin/overtime/overtime",
+    "pages/admin/statistics/statistics",
+    "pages/admin/statistics/detail/detail",
+    "pages/admin/log/log",
+    "pages/admin/notice/notice",
+    "pages/admin/register_audit/register_audit",
+    "pages/manager/index/index",
+    "pages/manager/approval/approval",
+    "pages/manager/records/records",
+    "pages/manager/statistics/statistics",
+    "pages/manager/statistics/detail/detail",
+    "pages/manager/employee/employee",
+    "pages/manager/notice/notice"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#1890ff",
+    "navigationBarTitleText": "考勤管理系统",
+    "navigationBarTextStyle": "white"
+  },
+  "tabBar": {
+    "color": "#999999",
+    "selectedColor": "#1890ff",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/checkin/checkin",
+        "text": "打卡"
+      },
+      {
+        "pagePath": "pages/attendance/attendance",
+        "text": "考勤"
+      },
+      {
+        "pagePath": "pages/profile/profile",
+        "text": "我的"
+      }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

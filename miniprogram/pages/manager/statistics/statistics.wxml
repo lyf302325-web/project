@@ -1,0 +1,98 @@
+<view class="container">
+  <view class="card filter-card">
+    <view class="filter-row">
+      <view class="filter-item">
+        <text class="filter-label">开始日期</text>
+        <picker mode="date" value="{{startDate}}" bindchange="onStartDateChange">
+          <view class="filter-input">
+            <text>{{startDate || '请选择'}}</text>
+            <text class="arrow">▶</text>
+          </view>
+        </picker>
+      </view>
+      <view class="filter-item">
+        <text class="filter-label">结束日期</text>
+        <picker mode="date" value="{{endDate}}" bindchange="onEndDateChange">
+          <view class="filter-input">
+            <text>{{endDate || '请选择'}}</text>
+            <text class="arrow">▶</text>
+          </view>
+        </picker>
+      </view>
+    </view>
+    <view class="filter-row">
+      <view class="filter-item">
+        <text class="filter-label">考勤状态</text>
+        <picker mode="selector" range="{{statusOptions}}" range-key="label" value="{{statusIndex}}" bindchange="onStatusChange">
+          <view class="filter-input">
+            <text>{{statusOptions[statusIndex].label}}</text>
+            <text class="arrow">▶</text>
+          </view>
+        </picker>
+      </view>
+    </view>
+    <button class="search-btn" bindtap="handleSearch">查询</button>
+  </view>
+
+  <view class="card">
+    <view class="card-header">
+      <view class="card-title">汇总数据</view>
+      <view class="export-btn" bindtap="exportReport">导出Excel</view>
+    </view>
+    <view class="stats-grid">
+      <view class="stat-item">
+        <view class="stat-value success">{{stats.normal || 0}}</view>
+        <view class="stat-label">正常</view>
+      </view>
+      <view class="stat-item">
+        <view class="stat-value warning">{{stats.late || 0}}</view>
+        <view class="stat-label">迟到</view>
+      </view>
+      <view class="stat-item">
+        <view class="stat-value warning">{{stats.early || 0}}</view>
+        <view class="stat-label">早退</view>
+      </view>
+      <view class="stat-item">
+        <view class="stat-value error">{{stats.absent || 0}}</view>
+        <view class="stat-label">旷工</view>
+      </view>
+      <view class="stat-item">
+        <view class="stat-value">{{stats.fieldwork || 0}}</view>
+        <view class="stat-label">外勤</view>
+      </view>
+      <view class="stat-item">
+        <view class="stat-value warning">{{stats.abnormal || 0}}</view>
+        <view class="stat-label">异常</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="card">
+    <view class="card-title">员工明细</view>
+    <view class="employee-list" wx:if="{{filteredEmployeeStats.length > 0}}">
+      <view class="employee-item" wx:for="{{filteredEmployeeStats}}" wx:key="id" bindtap="goToEmployeeDetail" data-item="{{item}}">
+        <view class="employee-info">
+          <view class="employee-name">{{item.name}}</view>
+          <view class="employee-dept">工号：{{item.employeeNo}}</view>
+        </view>
+        <view class="employee-stats">
+          <view class="mini-stat">
+            <text class="mini-value success">{{item.normal}}</text>
+            <text class="mini-label">正常</text>
+          </view>
+          <view class="mini-stat">
+            <text class="mini-value warning">{{item.late}}</text>
+            <text class="mini-label">迟到</text>
+          </view>
+          <view class="mini-stat">
+            <text class="mini-value error">{{item.absent}}</text>
+            <text class="mini-label">旷工</text>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="empty" wx:else>
+      <view class="empty-text">暂无数据</view>
+    </view>
+  </view>
+</view>

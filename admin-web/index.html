@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>考勤管理系统 - 管理后台</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!-- 登录页 -->
+<div id="loginPage" class="login-page">
+  <div class="login-card">
+    <h2>考勤管理系统</h2>
+    <p class="login-sub">管理员登录</p>
+    <input id="loginUser" type="text" placeholder="账号" value="admin">
+    <input id="loginPass" type="password" placeholder="密码" value="123456">
+    <button onclick="doLogin()">登 录</button>
+    <div id="loginMsg" class="msg"></div>
+  </div>
+</div>
+
+<!-- 主页面 -->
+<div id="mainPage" class="main" style="display:none">
+  <div class="sidebar">
+    <div class="logo">考勤管理后台</div>
+    <div class="nav-item active" data-page="dashboard" onclick="switchPage('dashboard',this)">数据概览</div>
+    <div class="nav-item" data-page="employee" onclick="switchPage('employee',this)">员工管理</div>
+    <div class="nav-item" data-page="department" onclick="switchPage('department',this)">部门管理</div>
+    <div class="nav-item" data-page="register" onclick="switchPage('register',this)">注册审核</div>
+    <div class="nav-item" data-page="statistics" onclick="switchPage('statistics',this)">数据统计</div>
+    <div class="nav-item" data-page="log" onclick="switchPage('log',this)">操作日志</div>
+    <div class="nav-item" data-page="notice" onclick="switchPage('notice',this)">消息配置</div>
+    <div class="nav-item" data-page="rule" onclick="switchPage('rule',this)">考勤规则</div>
+    <div class="nav-item logout" onclick="doLogout()">退出登录</div>
+  </div>
+  <div class="content">
+    <div class="header">
+      <span id="headerTitle">数据概览</span>
+      <span id="headerUser"></span>
+    </div>
+    <div id="pageContent" class="page-content"></div>
+  </div>
+</div>
+
+<!-- 页面模板 -->
+<template id="tpl-dashboard">
+  <div class="stats-row" id="dashStats"></div>
+  <div class="card"><h3>待办事项</h3><div id="dashPending"></div></div>
+</template>
+
+<template id="tpl-employee">
+  <div class="toolbar">
+    <input id="empKeyword" placeholder="搜索员工..." onkeyup="if(event.key==='Enter')loadEmployees()">
+    <button onclick="loadEmployees()">搜索</button>
+    <button class="btn-primary" onclick="showAddEmployee()">添加员工</button>
+  </div>
+  <table class="data-table" id="empTable">
+    <thead><tr><th>工号</th><th>姓名</th><th>账号</th><th>部门</th><th>岗位</th><th>手机号</th><th>状态</th><th>操作</th></tr></thead>
+    <tbody id="empBody"></tbody>
+  </table>
+</template>
+
+<template id="tpl-department">
+  <div class="toolbar">
+    <button class="btn-primary" onclick="showAddDept()">添加部门</button>
+  </div>
+  <table class="data-table">
+    <thead><tr><th>ID</th><th>部门名称</th><th>负责人</th><th>操作</th></tr></thead>
+    <tbody id="deptBody"></tbody>
+  </table>
+</template>
+
+<template id="tpl-register">
+  <div class="card"><h3>待审核注册申请</h3>
+    <table class="data-table">
+      <thead><tr><th>账号</th><th>姓名</th><th>工号</th><th>手机号</th><th>操作</th></tr></thead>
+      <tbody id="regBody"></tbody>
+    </table>
+  </div>
+</template>
+
+<template id="tpl-statistics">
+  <div class="toolbar">
+    <label>月份: <input id="statMonth" type="month"></label>
+    <button onclick="loadStatistics()">查询</button>
+    <button onclick="exportCSV()">导出CSV</button>
+  </div>
+  <div class="stats-row" id="statSummary"></div>
+  <table class="data-table">
+    <thead><tr><th>姓名</th><th>工号</th><th>正常</th><th>迟到</th><th>早退</th><th>缺勤</th><th>请假</th></tr></thead>
+    <tbody id="statBody"></tbody>
+  </table>
+</template>
+
+<template id="tpl-log">
+  <div class="toolbar">
+    <label>开始: <input id="logStart" type="date"></label>
+    <label>结束: <input id="logEnd" type="date"></label>
+    <button onclick="loadLogs()">查询</button>
+  </div>
+  <table class="data-table">
+    <thead><tr><th>操作人</th><th>操作</th><th>详情</th><th>IP</th><th>时间</th></tr></thead>
+    <tbody id="logBody"></tbody>
+  </table>
+</template>
+
+<template id="tpl-notice">
+  <div class="card" style="max-width:500px">
+    <h3>消息通知配置</h3>
+    <div class="form-row"><label>考勤异常提醒</label><input type="checkbox" id="ncAlert"></div>
+    <div class="form-row"><label>审批结果推送</label><input type="checkbox" id="ncApproval"></div>
+    <div class="form-row"><label>待审批提醒</label><input type="checkbox" id="ncPending"></div>
+    <div class="form-row"><label>打卡提醒</label><input type="checkbox" id="ncCheckin"></div>
+    <div class="form-row"><label>上班提醒时间</label><input type="time" id="ncMorning" value="08:50"></div>
+    <div class="form-row"><label>下班提醒时间</label><input type="time" id="ncEvening" value="18:00"></div>
+    <button class="btn-primary" onclick="saveNotice()">保存配置</button>
+  </div>
+</template>
+
+<template id="tpl-rule">
+  <div class="card" style="max-width:500px">
+    <h3>考勤规则配置</h3>
+    <div class="form-row"><label>上班时间</label><input type="time" id="ruleIn" value="09:00"></div>
+    <div class="form-row"><label>下班时间</label><input type="time" id="ruleOut" value="18:00"></div>
+    <div class="form-row"><label>迟到阈值(分钟)</label><input type="number" id="ruleLate" value="30"></div>
+    <div class="form-row"><label>早退阈值(分钟)</label><input type="number" id="ruleEarly" value="30"></div>
+    <div class="form-row"><label>打卡范围(米)</label><input type="number" id="ruleRange" value="500"></div>
+    <button class="btn-primary" onclick="saveRule()">保存规则</button>
+  </div>
+</template>
+
+<!-- 弹窗 -->
+<div id="modal" class="modal" style="display:none">
+  <div class="modal-mask" onclick="closeModal()"></div>
+  <div class="modal-body">
+    <h3 id="modalTitle"></h3>
+    <div id="modalContent"></div>
+    <div class="modal-footer">
+      <button onclick="closeModal()">取消</button>
+      <button class="btn-primary" id="modalOk">确定</button>
+    </div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

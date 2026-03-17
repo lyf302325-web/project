@@ -1,0 +1,88 @@
+<view class="container">
+  <!-- 员工信息 -->
+  <view class="user-card">
+    <view class="user-avatar">{{empInfo.name ? empInfo.name[0] : '员'}}</view>
+    <view class="user-info">
+      <view class="user-name">{{empInfo.name}}</view>
+      <view class="user-no">工号：{{empInfo.employeeNo}}</view>
+    </view>
+    <view class="month-label">{{month}}</view>
+  </view>
+
+  <!-- 考勤记录列表 -->
+  <view class="record-list" wx:if="{{records.length > 0}}">
+    <view class="record-card" wx:for="{{records}}" wx:key="id">
+      <view class="record-date">{{item.attendanceDate}}</view>
+      <view class="record-body">
+        <!-- 签到 -->
+        <view class="record-row">
+          <view class="row-label">签到</view>
+          <view class="row-time">{{item.checkInTime || '未签到'}}</view>
+          <view class="row-status status-tag {{item.checkInStatus === 0 ? 'status-success' : item.checkInStatus === 1 ? 'status-warning' : ''}}">
+            {{item.checkInStatus === 0 ? '正常' : item.checkInStatus === 1 ? '迟到' : ''}}
+          </view>
+        </view>
+        <view class="record-photo" wx:if="{{item.checkInPhoto}}" bindtap="previewPhoto" data-url="{{item.checkInPhoto}}">
+          <image src="{{baseUrl + item.checkInPhoto}}" mode="aspectFill" class="photo-img"></image>
+          <text class="photo-label">签到照片</text>
+        </view>
+
+        <!-- 签退 -->
+        <view class="record-row">
+          <view class="row-label">签退</view>
+          <view class="row-time">{{item.checkOutTime || '未签退'}}</view>
+          <view class="row-status status-tag {{item.checkOutStatus === 0 ? 'status-success' : item.checkOutStatus === 2 ? 'status-warning' : ''}}">
+            {{item.checkOutStatus === 0 ? '正常' : item.checkOutStatus === 2 ? '早退' : ''}}
+          </view>
+        </view>
+        <view class="record-photo" wx:if="{{item.checkOutPhoto}}" bindtap="previewPhoto" data-url="{{item.checkOutPhoto}}">
+          <image src="{{baseUrl + item.checkOutPhoto}}" mode="aspectFill" class="photo-img"></image>
+          <text class="photo-label">签退照片</text>
+        </view>
+      </view>
+      <view class="correct-btn" bindtap="showCorrectModal" data-index="{{index}}" data-item="{{item}}">修正记录</view>
+    </view>
+  </view>
+
+  <view class="empty" wx:else>
+    <view class="empty-text">该月暂无考勤记录</view>
+  </view>
+</view>
+
+<!-- 修正弹窗 -->
+<view class="modal" wx:if="{{showModal}}">
+  <view class="modal-mask" bindtap="closeModal"></view>
+  <view class="modal-content">
+    <view class="modal-title">修正考勤记录 - {{correctData.attendanceDate}}</view>
+    <view class="modal-body">
+      <view class="form-item">
+        <text class="form-label">签到时间</text>
+        <picker mode="time" value="{{correctData.checkInTime}}" bindchange="onCheckInTimeChange">
+          <view class="form-input picker">{{correctData.checkInTime || '未签到'}}<text class="arrow">▶</text></view>
+        </picker>
+      </view>
+      <view class="form-item">
+        <text class="form-label">签到状态</text>
+        <picker mode="selector" range="{{checkInStatusList}}" range-key="name" value="{{correctData.checkInStatusIndex}}" bindchange="onCheckInStatusChange">
+          <view class="form-input picker">{{checkInStatusList[correctData.checkInStatusIndex].name}}<text class="arrow">▶</text></view>
+        </picker>
+      </view>
+      <view class="form-item">
+        <text class="form-label">签退时间</text>
+        <picker mode="time" value="{{correctData.checkOutTime}}" bindchange="onCheckOutTimeChange">
+          <view class="form-input picker">{{correctData.checkOutTime || '未签退'}}<text class="arrow">▶</text></view>
+        </picker>
+      </view>
+      <view class="form-item">
+        <text class="form-label">签退状态</text>
+        <picker mode="selector" range="{{checkOutStatusList}}" range-key="name" value="{{correctData.checkOutStatusIndex}}" bindchange="onCheckOutStatusChange">
+          <view class="form-input picker">{{checkOutStatusList[correctData.checkOutStatusIndex].name}}<text class="arrow">▶</text></view>
+        </picker>
+      </view>
+    </view>
+    <view class="modal-footer">
+      <button class="modal-btn cancel" bindtap="closeModal">取消</button>
+      <button class="modal-btn confirm" bindtap="submitCorrect">确认修正</button>
+    </view>
+  </view>
+</view>

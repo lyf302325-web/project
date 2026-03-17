@@ -1,0 +1,177 @@
+.container {
+  padding: 20rpx;
+}
+
+.filter-card {
+  margin-bottom: 20rpx;
+}
+
+.filter-row {
+  display: flex;
+  margin-bottom: 20rpx;
+}
+
+.filter-item {
+  flex: 1;
+  margin-right: 20rpx;
+}
+
+.filter-item:last-child {
+  margin-right: 0;
+}
+
+.filter-label {
+  font-size: 24rpx;
+  color: #999;
+  margin-bottom: 8rpx;
+  display: block;
+}
+
+.filter-input {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16rpx;
+  background-color: #f5f5f5;
+  border-radius: 8rpx;
+  font-size: 28rpx;
+  color: #333;
+}
+
+.arrow {
+  color: #999;
+  font-size: 24rpx;
+}
+
+.search-btn {
+  background-color: #1890ff;
+  color: #fff;
+  border-radius: 8rpx;
+  font-size: 28rpx;
+  padding: 16rpx 0;
+}
+
+.stats-grid {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 16rpx;
+}
+
+.stat-item {
+  width: 33.33%;
+  text-align: center;
+  padding: 20rpx 0;
+}
+
+.stat-value {
+  font-size: 40rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.stat-value.success {
+  color: #52c41a;
+}
+
+.stat-value.warning {
+  color: #faad14;
+}
+
+.stat-value.error {
+  color: #ff4d4f;
+}
+
+.stat-label {
+  font-size: 24rpx;
+  color: #999;
+  margin-top: 8rpx;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16rpx;
+}
+
+.export-btn {
+  font-size: 26rpx;
+  color: #1890ff;
+  padding: 8rpx 16rpx;
+  border: 1rpx solid #1890ff;
+  border-radius: 6rpx;
+}
+
+.employee-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #f0f0f0;
+  position: relative;
+}
+
+.employee-item::after {
+  content: '▶';
+  font-size: 20rpx;
+  color: #ccc;
+  margin-left: 12rpx;
+}
+
+.employee-item:last-child {
+  border-bottom: none;
+}
+
+.employee-name {
+  font-size: 28rpx;
+  color: #333;
+  margin-bottom: 4rpx;
+}
+
+.employee-dept {
+  font-size: 24rpx;
+  color: #999;
+}
+
+.employee-stats {
+  display: flex;
+}
+
+.mini-stat {
+  text-align: center;
+  margin-left: 24rpx;
+}
+
+.mini-value {
+  font-size: 28rpx;
+  font-weight: bold;
+  display: block;
+}
+
+.mini-value.success {
+  color: #52c41a;
+}
+
+.mini-value.warning {
+  color: #faad14;
+}
+
+.mini-value.error {
+  color: #ff4d4f;
+}
+
+.mini-label {
+  font-size: 20rpx;
+  color: #999;
+}
+
+.empty {
+  text-align: center;
+  padding: 80rpx 0;
+}
+
+.empty-text {
+  font-size: 26rpx;
+  color: #999;
+}
+

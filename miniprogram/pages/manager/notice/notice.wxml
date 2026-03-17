@@ -1,0 +1,40 @@
+<view class="container">
+  <view class="list" wx:if="{{list.length > 0}}">
+    <view class="list-item" wx:for="{{list}}" wx:key="index" bindtap="openDetail" data-item="{{item}}">
+      <view class="item-header">
+        <view class="title">{{item.title}}</view>
+        <view class="status-tag {{item.typeClass}}">{{item.typeLabel}}</view>
+      </view>
+      <view class="content">{{item.content}}</view>
+      <view class="time">{{item.timeText}}</view>
+    </view>
+  </view>
+
+  <view class="empty" wx:else>
+    <view class="empty-text">暂无消息</view>
+  </view>
+</view>
+
+<view class="modal" wx:if="{{showModal}}">
+  <view class="modal-mask" bindtap="closeModal"></view>
+  <view class="modal-content">
+    <view class="modal-title">{{currentItem.title}}</view>
+    <view class="modal-body" wx:if="{{currentItem}}">
+      <view class="row">
+        <text class="label">类型</text>
+        <text class="value">{{currentItem.typeLabel}}</text>
+      </view>
+      <view class="row">
+        <text class="label">时间</text>
+        <text class="value">{{currentItem.timeText}}</text>
+      </view>
+      <view class="row">
+        <text class="label">内容</text>
+        <text class="value">{{currentItem.content}}</text>
+      </view>
+    </view>
+    <view class="modal-footer">
+      <button class="modal-btn confirm" bindtap="closeModal">关闭</button>
+    </view>
+  </view>
+</view>

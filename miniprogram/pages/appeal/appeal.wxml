@@ -1,0 +1,40 @@
+<view class="container">
+  <view class="apply-btn" bindtap="goToApply">
+    <text>+ 发起异常申诉</text>
+  </view>
+
+  <view class="filter-tabs">
+    <view class="tab {{currentTab === 'all' ? 'active' : ''}}" bindtap="switchTab" data-tab="all">全部</view>
+    <view class="tab {{currentTab === 'pending' ? 'active' : ''}}" bindtap="switchTab" data-tab="pending">审核中</view>
+    <view class="tab {{currentTab === 'approved' ? 'active' : ''}}" bindtap="switchTab" data-tab="approved">已通过</view>
+    <view class="tab {{currentTab === 'rejected' ? 'active' : ''}}" bindtap="switchTab" data-tab="rejected">已拒绝</view>
+  </view>
+
+  <view class="list" wx:if="{{appealList.length > 0}}">
+    <view class="list-item" wx:for="{{appealList}}" wx:key="id">
+      <view class="item-header">
+        <view class="appeal-date">{{item.attendanceDate}}</view>
+        <view class="appeal-status status-tag {{item.status === 0 ? 'status-normal' : item.status === 1 ? 'status-success' : 'status-error'}}">
+          {{item.status === 0 ? '审核中' : item.status === 1 ? '已通过' : '已拒绝'}}
+        </view>
+      </view>
+      <view class="item-content">
+        <view class="info-row">
+          <text class="info-label">申诉类型：</text>
+          <text class="info-value">{{item.appealTypeName}}</text>
+        </view>
+        <view class="info-row">
+          <text class="info-label">申诉原因：</text>
+          <text class="info-value reason">{{item.reason}}</text>
+        </view>
+      </view>
+      <view class="item-footer">
+        <text class="apply-time">申请时间：{{item.createTime}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="empty" wx:else>
+    <view class="empty-text">暂无申诉记录</view>
+  </view>
+</view>

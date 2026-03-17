@@ -1,0 +1,40 @@
+<view class="container">
+  <view class="apply-btn" bindtap="goToApply">
+    <text>+ 发起外勤申请</text>
+  </view>
+
+  <view class="filter-tabs">
+    <view class="tab {{currentTab === 'all' ? 'active' : ''}}" bindtap="switchTab" data-tab="all">全部</view>
+    <view class="tab {{currentTab === 'pending' ? 'active' : ''}}" bindtap="switchTab" data-tab="pending">审批中</view>
+    <view class="tab {{currentTab === 'approved' ? 'active' : ''}}" bindtap="switchTab" data-tab="approved">已通过</view>
+    <view class="tab {{currentTab === 'rejected' ? 'active' : ''}}" bindtap="switchTab" data-tab="rejected">已拒绝</view>
+  </view>
+
+  <view class="list" wx:if="{{fieldworkList.length > 0}}">
+    <view class="list-item" wx:for="{{fieldworkList}}" wx:key="id">
+      <view class="item-header">
+        <view class="fieldwork-date">{{item.fieldworkDate}}</view>
+        <view class="fieldwork-status status-tag {{item.status === 0 ? 'status-normal' : item.status === 1 ? 'status-success' : 'status-error'}}">
+          {{item.status === 0 ? '审批中' : item.status === 1 ? '已通过' : '已拒绝'}}
+        </view>
+      </view>
+      <view class="item-content">
+        <view class="info-row">
+          <text class="info-label">外勤地点：</text>
+          <text class="info-value">{{item.location}}</text>
+        </view>
+        <view class="info-row">
+          <text class="info-label">外勤事由：</text>
+          <text class="info-value reason">{{item.reason}}</text>
+        </view>
+      </view>
+      <view class="item-footer">
+        <text class="apply-time">申请时间：{{item.createTime}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="empty" wx:else>
+    <view class="empty-text">暂无外勤记录</view>
+  </view>
+</view>

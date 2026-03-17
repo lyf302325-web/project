@@ -1,0 +1,22 @@
+<view class="container">
+  <view class="card">
+    <view class="card-title">年度额度配置</view>
+    <view class="form-item">
+      <text class="form-label">年度</text>
+      <input class="form-input" type="number" value="{{year}}" bindinput="onYearInput" />
+    </view>
+  </view>
+
+  <view class="card">
+    <view class="card-title">各类假期额度(天)</view>
+    <view class="rule" wx:for="{{rules}}" wx:key="leaveType">
+      <view class="left">
+        <view class="name">{{item.leaveTypeName}}</view>
+      </view>
+      <input class="days" type="number" value="{{item.totalDays}}" bindinput="onTotalDaysInput" data-index="{{index}}" />
+    </view>
+  </view>
+
+  <button class="submit-btn" bindtap="saveRules" loading="{{loading}}">保存规则</button>
+  <button class="init-btn" bindtap="initBalances">初始化/更新余额</button>
+</view>

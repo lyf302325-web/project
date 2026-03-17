@@ -1,0 +1,47 @@
+<view class="container">
+  <view class="card">
+    <view class="form-item">
+      <view class="form-label">考勤日期</view>
+      <picker mode="date" bindchange="onDateChange" value="{{attendanceDate}}">
+        <view class="form-input picker">
+          {{attendanceDate || '请选择考勤日期'}}
+          <text class="arrow">▶</text>
+        </view>
+      </picker>
+    </view>
+
+    <view class="form-item">
+      <view class="form-label">申诉类型</view>
+      <picker mode="selector" range="{{appealTypes}}" range-key="name" bindchange="onTypeChange">
+        <view class="form-input picker">
+          {{selectedType.name || '请选择申诉类型'}}
+          <text class="arrow">▶</text>
+        </view>
+      </picker>
+    </view>
+
+    <view class="form-item column">
+      <view class="form-label">申诉原因</view>
+      <textarea class="form-textarea" placeholder="请详细描述申诉原因" value="{{reason}}" bindinput="onReasonInput" maxlength="200"></textarea>
+      <view class="word-count">{{reason.length || 0}}/200</view>
+    </view>
+
+    <view class="form-item column">
+      <view class="form-label">证明材料</view>
+      <view class="upload-area">
+        <view class="image-list">
+          <view class="image-item" wx:for="{{images}}" wx:key="index">
+            <image src="{{item}}" mode="aspectFill"></image>
+            <view class="delete-btn" bindtap="deleteImage" data-index="{{index}}">×</view>
+          </view>
+          <view class="upload-btn" bindtap="chooseImage" wx:if="{{images.length < 3}}">
+            <text>+</text>
+            <text class="upload-text">上传图片</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <button class="submit-btn" bindtap="submitApply" loading="{{loading}}">提交申诉</button>
+</view>

@@ -1,0 +1,43 @@
+<view class="container">
+  <!-- 筛选条件 -->
+  <view class="card filter-card">
+    <view class="filter-row">
+      <view class="filter-item">
+        <picker mode="date" bindchange="onStartDateChange" value="{{startDate}}">
+          <view class="filter-input">
+            {{startDate || '开始日期'}}
+            <text class="arrow">▼</text>
+          </view>
+        </picker>
+      </view>
+      <view class="filter-item">
+        <picker mode="date" bindchange="onEndDateChange" value="{{endDate}}">
+          <view class="filter-input">
+            {{endDate || '结束日期'}}
+            <text class="arrow">▼</text>
+          </view>
+        </picker>
+      </view>
+      <view class="search-btn" bindtap="handleSearch">查询</view>
+    </view>
+  </view>
+
+  <!-- 日志列表 -->
+  <view class="list" wx:if="{{logList.length > 0}}">
+    <view class="list-item" wx:for="{{logList}}" wx:key="id">
+      <view class="log-header">
+        <view class="log-user">{{item.operatorName}}</view>
+        <view class="log-time">{{item.createTime}}</view>
+      </view>
+      <view class="log-content">
+        <view class="log-action">{{item.action}}</view>
+        <view class="log-detail">{{item.detail}}</view>
+      </view>
+      <view class="log-ip">IP: {{item.ip}}</view>
+    </view>
+  </view>
+
+  <view class="empty" wx:else>
+    <view class="empty-text">暂无操作日志</view>
+  </view>
+</view>

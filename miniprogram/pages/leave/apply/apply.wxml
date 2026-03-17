@@ -1,0 +1,73 @@
+<view class="container">
+  <view class="card">
+    <view class="form-item">
+      <view class="form-label">请假类型</view>
+      <picker mode="selector" range="{{leaveTypes}}" range-key="name" bindchange="onTypeChange">
+        <view class="form-input picker">
+          {{selectedType.name || '请选择请假类型'}}
+          <text class="arrow">▶</text>
+        </view>
+      </picker>
+    </view>
+
+    <view class="form-item">
+      <view class="form-label">开始日期</view>
+      <picker mode="date" bindchange="onStartDateChange" value="{{startDate}}">
+        <view class="form-input picker">
+          {{startDate || '请选择开始日期'}}
+          <text class="arrow">▶</text>
+        </view>
+      </picker>
+    </view>
+
+    <view class="form-item">
+      <view class="form-label">结束日期</view>
+      <picker mode="date" bindchange="onEndDateChange" value="{{endDate}}" start="{{startDate}}">
+        <view class="form-input picker">
+          {{endDate || '请选择结束日期'}}
+          <text class="arrow">▶</text>
+        </view>
+      </picker>
+    </view>
+
+    <view class="form-item">
+      <view class="form-label">请假天数</view>
+      <view class="form-input">{{days || 0}}天</view>
+    </view>
+
+    <view class="form-item column">
+      <view class="form-label">请假事由</view>
+      <textarea class="form-textarea" placeholder="请输入请假事由" value="{{reason}}" bindinput="onReasonInput" maxlength="200"></textarea>
+      <view class="word-count">{{reason.length || 0}}/200</view>
+    </view>
+
+    <view class="form-item column">
+      <view class="form-label">证明材料（可选）</view>
+      <view class="upload-area">
+        <view class="image-list">
+          <view class="image-item" wx:for="{{images}}" wx:key="index">
+            <image src="{{item}}" mode="aspectFill"></image>
+            <view class="delete-btn" bindtap="deleteImage" data-index="{{index}}">×</view>
+          </view>
+          <view class="upload-btn" bindtap="chooseImage" wx:if="{{images.length < 3}}">
+            <text>+</text>
+            <text class="upload-text">上传图片</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="approval-info card" wx:if="{{approvalFlow.length > 0}}">
+    <view class="card-title">审批流程</view>
+    <view class="flow-list">
+      <view class="flow-item" wx:for="{{approvalFlow}}" wx:key="index">
+        <view class="flow-index">{{index + 1}}</view>
+        <view class="flow-name">{{item.approverName}}</view>
+        <view class="flow-role">{{item.roleName}}</view>
+      </view>
+    </view>
+  </view>
+
+  <button class="submit-btn" bindtap="submitApply" loading="{{loading}}">提交申请</button>
+</view>

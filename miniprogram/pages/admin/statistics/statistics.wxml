@@ -1,0 +1,92 @@
+<view class="container">
+  <!-- 筛选条件 -->
+  <view class="card filter-card">
+    <view class="filter-row">
+      <view class="filter-item">
+        <text class="filter-label">部门</text>
+        <picker mode="selector" range="{{departments}}" range-key="name" bindchange="onDepartmentChange">
+          <view class="filter-input">
+            {{selectedDepartment.name || '全部'}}
+            <text class="arrow">▼</text>
+          </view>
+        </picker>
+      </view>
+      <view class="filter-item">
+        <text class="filter-label">月份</text>
+        <picker mode="date" fields="month" bindchange="onMonthChange" value="{{selectedMonth}}">
+          <view class="filter-input">
+            {{selectedMonth || '选择月份'}}
+            <text class="arrow">▼</text>
+          </view>
+        </picker>
+      </view>
+    </view>
+    <button class="search-btn" bindtap="handleSearch">查询</button>
+  </view>
+
+  <!-- 统计概览 -->
+  <view class="card">
+    <view class="card-title">考勤统计概览</view>
+    <view class="stats-grid">
+      <view class="stat-item">
+        <view class="stat-value success">{{stats.normal || 0}}</view>
+        <view class="stat-label">正常出勤</view>
+      </view>
+      <view class="stat-item">
+        <view class="stat-value warning">{{stats.late || 0}}</view>
+        <view class="stat-label">迟到</view>
+      </view>
+      <view class="stat-item">
+        <view class="stat-value warning">{{stats.early || 0}}</view>
+        <view class="stat-label">早退</view>
+      </view>
+      <view class="stat-item">
+        <view class="stat-value">{{stats.leave || 0}}</view>
+        <view class="stat-label">请假</view>
+      </view>
+      <view class="stat-item">
+        <view class="stat-value error">{{stats.absent || 0}}</view>
+        <view class="stat-label">旷工</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 员工考勤明细 -->
+  <view class="card">
+    <view class="card-header">
+      <view class="card-title">员工考勤明细</view>
+      <view class="export-btn" bindtap="exportReport">导出报表</view>
+    </view>
+    
+    <view class="employee-list" wx:if="{{employeeStats.length > 0}}">
+      <view class="employee-item" wx:for="{{employeeStats}}" wx:key="id" bindtap="goToDetail" data-item="{{item}}">
+        <view class="employee-info">
+          <view class="employee-name">{{item.name}}</view>
+          <view class="employee-dept">{{item.departmentName}}</view>
+        </view>
+        <view class="employee-stats">
+          <view class="mini-stat">
+            <text class="mini-value success">{{item.normal}}</text>
+            <text class="mini-label">正常</text>
+          </view>
+          <view class="mini-stat">
+            <text class="mini-value warning">{{item.late}}</text>
+            <text class="mini-label">迟到</text>
+          </view>
+          <view class="mini-stat">
+            <text class="mini-value warning">{{item.early}}</text>
+            <text class="mini-label">早退</text>
+          </view>
+          <view class="mini-stat">
+            <text class="mini-value error">{{item.absent}}</text>
+            <text class="mini-label">旷工</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class="empty" wx:else>
+      <view class="empty-text">暂无统计数据</view>
+    </view>
+  </view>
+</view>

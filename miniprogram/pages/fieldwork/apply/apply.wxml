@@ -1,0 +1,42 @@
+<view class="container">
+  <view class="card">
+    <view class="form-item">
+      <view class="form-label">外勤日期</view>
+      <picker mode="date" bindchange="onDateChange" value="{{fieldworkDate}}">
+        <view class="form-input picker">
+          {{fieldworkDate || '请选择外勤日期'}}
+          <text class="arrow">▶</text>
+        </view>
+      </picker>
+    </view>
+
+    <view class="form-item column">
+      <view class="form-label">外勤地点</view>
+      <input class="form-input-text" placeholder="请输入外勤地点" value="{{location}}" bindinput="onLocationInput" />
+    </view>
+
+    <view class="form-item column">
+      <view class="form-label">外勤事由</view>
+      <textarea class="form-textarea" placeholder="请输入外勤事由" value="{{reason}}" bindinput="onReasonInput" maxlength="200"></textarea>
+      <view class="word-count">{{reason.length || 0}}/200</view>
+    </view>
+
+    <view class="form-item column">
+      <view class="form-label">相关凭证（可选）</view>
+      <view class="upload-area">
+        <view class="image-list">
+          <view class="image-item" wx:for="{{images}}" wx:key="index">
+            <image src="{{item}}" mode="aspectFill"></image>
+            <view class="delete-btn" bindtap="deleteImage" data-index="{{index}}">×</view>
+          </view>
+          <view class="upload-btn" bindtap="chooseImage" wx:if="{{images.length < 3}}">
+            <text>+</text>
+            <text class="upload-text">上传图片</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <button class="submit-btn" bindtap="submitApply" loading="{{loading}}">提交申请</button>
+</view>

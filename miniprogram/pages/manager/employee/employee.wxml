@@ -1,0 +1,26 @@
+<view class="container">
+  <view class="search-bar">
+    <input class="search-input" placeholder="搜索员工姓名/工号" value="{{keyword}}" bindinput="onSearchInput" />
+    <view class="search-btn" bindtap="handleSearch">搜索</view>
+  </view>
+
+  <view class="list" wx:if="{{employeeList.length > 0}}">
+    <view class="list-item" wx:for="{{employeeList}}" wx:key="id" bindtap="goToDetail" data-item="{{item}}">
+      <view class="employee-avatar">{{item.name ? item.name[0] : '员'}}</view>
+      <view class="employee-info">
+        <view class="employee-name">{{item.name}}</view>
+        <view class="employee-detail">
+          <text>工号：{{item.employeeNo}}</text>
+          <text class="divider">|</text>
+          <text>{{item.position || ''}}</text>
+        </view>
+      </view>
+      <view class="arrow">▶</view>
+    </view>
+  </view>
+
+  <view class="empty" wx:else>
+    <view class="empty-text">暂无员工数据</view>
+  </view>
+</view>
+

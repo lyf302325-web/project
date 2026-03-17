@@ -1,0 +1,66 @@
+<view class="container">
+  <view class="card">
+    <view class="card-title">分级审批规则配置</view>
+    <view class="tip">根据请假天数自动匹配审批流程</view>
+    
+    <view class="rule-list">
+      <view class="rule-item" wx:for="{{ruleList}}" wx:key="index">
+        <view class="rule-header">
+          <text class="rule-title">规则 {{index + 1}}</text>
+          <view class="delete-btn" bindtap="deleteRule" data-index="{{index}}">删除</view>
+        </view>
+        <view class="rule-content">
+          <view class="form-item">
+            <text class="form-label">部门</text>
+            <picker mode="selector" range="{{departments}}" range-key="name" bindchange="onDepartmentChange" data-index="{{index}}">
+              <view class="form-input picker">
+                {{item.departmentName || '全部部门'}}
+                <text class="arrow">▶</text>
+              </view>
+            </picker>
+          </view>
+          <view class="form-item">
+            <text class="form-label">请假类型</text>
+            <picker mode="selector" range="{{leaveTypes}}" range-key="name" bindchange="onLeaveTypeChange" data-index="{{index}}">
+              <view class="form-input picker">
+                {{item.leaveTypeName || '全部类型'}}
+                <text class="arrow">▶</text>
+              </view>
+            </picker>
+          </view>
+          <view class="form-item">
+            <text class="form-label">天数范围</text>
+            <view class="range-input">
+              <input type="number" placeholder="起" value="{{item.minDays}}" bindinput="onMinDaysInput" data-index="{{index}}" />
+              <text>至</text>
+              <input type="number" placeholder="止" value="{{item.maxDays}}" bindinput="onMaxDaysInput" data-index="{{index}}" />
+              <text>天</text>
+            </view>
+          </view>
+          <view class="form-item">
+            <text class="form-label">审批层级</text>
+            <picker mode="selector" range="{{levels}}" range-key="name" bindchange="onLevelChange" data-index="{{index}}">
+              <view class="form-input picker">
+                {{item.levelName || '主管(一级)'}}
+                <text class="arrow">▶</text>
+              </view>
+            </picker>
+          </view>
+          <view class="form-item" wx:if="{{item.level == 2}}">
+            <text class="form-label">审批人</text>
+            <picker mode="selector" range="{{approvers}}" range-key="name" bindchange="onApproverChange" data-index="{{index}}">
+              <view class="form-input picker">
+                {{item.approverName || '请选择'}}
+                <text class="arrow">▶</text>
+              </view>
+            </picker>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <button class="add-rule-btn" bindtap="addRule">+ 添加规则</button>
+  </view>
+
+  <button class="submit-btn" bindtap="handleSubmit" loading="{{loading}}">保存配置</button>
+</view>

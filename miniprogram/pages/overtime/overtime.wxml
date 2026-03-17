@@ -1,0 +1,46 @@
+<view class="container">
+  <view class="apply-btn" bindtap="goToApply">
+    <text>+ 发起加班申请</text>
+  </view>
+
+  <view class="filter-tabs">
+    <view class="tab {{currentTab === 'all' ? 'active' : ''}}" bindtap="switchTab" data-tab="all">全部</view>
+    <view class="tab {{currentTab === 'pending' ? 'active' : ''}}" bindtap="switchTab" data-tab="pending">审批中</view>
+    <view class="tab {{currentTab === 'approved' ? 'active' : ''}}" bindtap="switchTab" data-tab="approved">已通过</view>
+    <view class="tab {{currentTab === 'rejected' ? 'active' : ''}}" bindtap="switchTab" data-tab="rejected">已拒绝</view>
+    <view class="tab {{currentTab === 'canceled' ? 'active' : ''}}" bindtap="switchTab" data-tab="canceled">已撤销</view>
+  </view>
+
+  <view class="list" wx:if="{{list.length > 0}}">
+    <view class="list-item" wx:for="{{list}}" wx:key="id">
+      <view class="item-header">
+        <view class="type">{{item.overtimeTypeName}}</view>
+        <view class="status status-tag {{item.status === 3 ? 'status-success' : item.status === 2 ? 'status-error' : 'status-normal'}}">
+          {{item.statusText}}
+        </view>
+      </view>
+      <view class="item-content">
+        <view class="info-row">
+          <text class="info-label">时间：</text>
+          <text class="info-value">{{item.startTime}} 至 {{item.endTime}}</text>
+        </view>
+        <view class="info-row">
+          <text class="info-label">工时：</text>
+          <text class="info-value">{{item.hours}} 小时</text>
+        </view>
+        <view class="info-row">
+          <text class="info-label">事由：</text>
+          <text class="info-value reason">{{item.reason}}</text>
+        </view>
+      </view>
+      <view class="item-footer">
+        <text class="apply-time">申请时间：{{item.createTime}}</text>
+        <button class="cancel-btn" wx:if="{{item.status === 0 || item.status === 1}}" bindtap="cancelApply" data-id="{{item.id}}">撤销</button>
+      </view>
+    </view>
+  </view>
+
+  <view class="empty" wx:else>
+    <view class="empty-text">暂无加班记录</view>
+  </view>
+</view>

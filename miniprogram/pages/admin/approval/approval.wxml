@@ -1,0 +1,75 @@
+<view class="container">
+  <!-- 筛选标签 -->
+  <view class="filter-tabs">
+    <view class="tab {{currentTab === 'pending' ? 'active' : ''}}" bindtap="switchTab" data-tab="pending">待审批</view>
+    <view class="tab {{currentTab === 'approved' ? 'active' : ''}}" bindtap="switchTab" data-tab="approved">已通过</view>
+    <view class="tab {{currentTab === 'rejected' ? 'active' : ''}}" bindtap="switchTab" data-tab="rejected">已拒绝</view>
+  </view>
+
+  <!-- 审批列表 -->
+  <view class="list" wx:if="{{approvalList.length > 0}}">
+    <view class="list-item" wx:for="{{approvalList}}" wx:key="id">
+      <view class="item-header">
+        <view class="applicant-info">
+          <view class="applicant-avatar">{{item.applicantName ? item.applicantName[0] : '员'}}</view>
+          <view class="applicant-name">{{item.applicantName}}</view>
+        </view>
+        <view class="apply-status status-tag {{item.status === 0 ? 'status-normal' : item.status === 1 ? 'status-success' : 'status-error'}}">
+          {{item.status === 0 ? '待审批' : item.status === 1 ? '已通过' : '已拒绝'}}
+        </view>
+      </view>
+      
+      <view class="item-content">
+        <view class="info-row" wx:if="{{type === 'leave'}}">
+          <text class="info-label">请假类型：</text>
+          <text class="info-value">{{item.leaveTypeName}}</text>
+        </view>
+        <view class="info-row" wx:if="{{type === 'leave'}}">
+          <text class="info-label">请假时间：</text>
+          <text class="info-value">{{item.startDate}} 至 {{item.endDate}} ({{item.days}}天)</text>
+        </view>
+        <view class="info-row" wx:if="{{type === 'fieldwork'}}">
+          <text class="info-label">外勤日期：</text>
+          <text class="info-value">{{item.fieldworkDate}}</text>
+        </view>
+        <view class="info-row" wx:if="{{type === 'fieldwork'}}">
+          <text class="info-label">外勤地点：</text>
+          <text class="info-value">{{item.location}}</text>
+        </view>
+        <view class="info-row" wx:if="{{type === 'appeal'}}">
+          <text class="info-label">考勤日期：</text>
+          <text class="info-value">{{item.attendanceDate}}</text>
+        </view>
+        <view class="info-row" wx:if="{{type === 'appeal'}}">
+          <text class="info-label">申诉类型：</text>
+          <text class="info-value">{{item.appealTypeName}}</text>
+        </view>
+        <view class="info-row">
+          <text class="info-label">申请事由：</text>
+          <text class="info-value">{{item.reason}}</text>
+        </view>
+        <view class="info-row">
+          <text class="info-label">申请时间：</text>
+          <text class="info-value">{{item.createTime}}</text>
+        </view>
+      </view>
+
+      <view class="item-actions" wx:if="{{item.status === 0}}">
+        <input class="opinion-input" placeholder="请输入审批意见（可选）" value="{{item.opinion}}" bindinput="onOpinionInput" data-index="{{index}}" />
+        <view class="action-btns">
+          <button class="action-btn reject" bindtap="handleReject" data-id="{{item.id}}" data-index="{{index}}">拒绝</button>
+          <button class="action-btn approve" bindtap="handleApprove" data-id="{{item.id}}" data-index="{{index}}">通过</button>
+        </view>
+      </view>
+
+      <view class="item-result" wx:if="{{item.status !== 0 && item.approvalOpinion}}">
+        <text class="result-label">审批意见：</text>
+        <text class="result-value">{{item.approvalOpinion}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="empty" wx:else>
+    <view class="empty-text">暂无审批记录</view>
+  </view>
+</view>

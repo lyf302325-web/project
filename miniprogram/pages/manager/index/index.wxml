@@ -1,0 +1,83 @@
+<view class="container">
+  <view class="admin-header">
+    <view class="admin-avatar">{{userInfo.name ? userInfo.name[0] : '主'}}</view>
+    <view class="admin-info">
+      <view class="admin-name">{{userInfo.name || '部门主管'}}</view>
+      <view class="admin-role">{{departmentName || (userInfo.departmentName || '')}} 部门主管</view>
+    </view>
+  </view>
+
+  <view class="card">
+    <view class="card-title">部门概览</view>
+    <view class="overview-stats">
+      <view class="stat-item">
+        <view class="stat-value">{{employeeCount || 0}}</view>
+        <view class="stat-label">部门人数</view>
+      </view>
+      <view class="stat-item">
+        <view class="stat-value warning">{{todayAbnormal || 0}}</view>
+        <view class="stat-label">当日异常</view>
+      </view>
+      <view class="stat-item">
+        <view class="stat-value">{{pendingLeave + pendingFieldwork + pendingAppeal + pendingOvertime}}</view>
+        <view class="stat-label">待审批</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="card">
+    <view class="card-title">待处理</view>
+    <view class="todo-list">
+      <view class="todo-item" bindtap="goToLeaveApproval">
+        <view class="todo-icon">📋</view>
+        <view class="todo-text">请假审批</view>
+        <view class="todo-count" wx:if="{{pendingLeave > 0}}">{{pendingLeave}}</view>
+        <view class="todo-arrow">▶</view>
+      </view>
+      <view class="todo-item" bindtap="goToFieldworkApproval">
+        <view class="todo-icon">🚗</view>
+        <view class="todo-text">外勤审批</view>
+        <view class="todo-count" wx:if="{{pendingFieldwork > 0}}">{{pendingFieldwork}}</view>
+        <view class="todo-arrow">▶</view>
+      </view>
+      <view class="todo-item" bindtap="goToAppealApproval">
+        <view class="todo-icon">📝</view>
+        <view class="todo-text">申诉处理</view>
+        <view class="todo-count" wx:if="{{pendingAppeal > 0}}">{{pendingAppeal}}</view>
+        <view class="todo-arrow">▶</view>
+      </view>
+      <view class="todo-item" bindtap="goToOvertimeApproval">
+        <view class="todo-icon">⏱️</view>
+        <view class="todo-text">加班初审</view>
+        <view class="todo-count" wx:if="{{pendingOvertime > 0}}">{{pendingOvertime}}</view>
+        <view class="todo-arrow">▶</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="card">
+    <view class="card-title">部门管理</view>
+    <view class="menu-grid">
+      <view class="menu-item" bindtap="goToApprovalRecords">
+        <view class="menu-icon">🗂️</view>
+        <view class="menu-text">审批记录</view>
+      </view>
+      <view class="menu-item" bindtap="goToStatistics">
+        <view class="menu-icon">📈</view>
+        <view class="menu-text">部门统计</view>
+      </view>
+      <view class="menu-item" bindtap="goToEmployees">
+        <view class="menu-icon">👥</view>
+        <view class="menu-text">员工信息</view>
+      </view>
+      <view class="menu-item" bindtap="goToNotice">
+        <view class="menu-icon">🔔</view>
+        <view class="menu-text">消息通知</view>
+      </view>
+      <view class="menu-item" bindtap="handleLogout">
+        <view class="menu-icon">🚪</view>
+        <view class="menu-text">退出登录</view>
+      </view>
+    </view>
+  </view>
+</view>

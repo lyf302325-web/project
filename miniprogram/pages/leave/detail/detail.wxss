@@ -1,0 +1,185 @@
+.container {
+  padding: 20rpx;
+}
+
+.status-header {
+  text-align: center;
+  padding: 40rpx;
+  border-radius: 12rpx 12rpx 0 0;
+  margin: -24rpx -24rpx 24rpx -24rpx;
+}
+
+.status-header.pending {
+  background: linear-gradient(135deg, #1890ff 0%, #36cfc9 100%);
+}
+
+.status-header.approved {
+  background: linear-gradient(135deg, #52c41a 0%, #73d13d 100%);
+}
+
+.status-header.rejected {
+  background: linear-gradient(135deg, #ff4d4f 0%, #ff7875 100%);
+}
+
+.status-text {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #fff;
+}
+
+.info-section {
+  padding-bottom: 24rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.info-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 16rpx 0;
+}
+
+.info-label {
+  color: #999;
+  font-size: 28rpx;
+}
+
+.info-value {
+  color: #333;
+  font-size: 28rpx;
+}
+
+.section-title {
+  font-size: 30rpx;
+  font-weight: 500;
+  color: #333;
+  margin: 24rpx 0 16rpx;
+}
+
+.reason-content {
+  font-size: 28rpx;
+  color: #666;
+  line-height: 1.6;
+}
+
+.image-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.image-list image {
+  width: 200rpx;
+  height: 200rpx;
+  margin-right: 20rpx;
+  margin-bottom: 20rpx;
+  border-radius: 8rpx;
+}
+
+.approval-flow {
+  padding: 16rpx 0;
+}
+
+.flow-item {
+  display: flex;
+  position: relative;
+  padding-left: 40rpx;
+  padding-bottom: 32rpx;
+}
+
+.flow-line {
+  position: absolute;
+  left: 12rpx;
+  top: 24rpx;
+  bottom: 0;
+  width: 2rpx;
+  background-color: #e8e8e8;
+}
+
+.flow-line.last {
+  display: none;
+}
+
+.flow-dot {
+  position: absolute;
+  left: 0;
+  top: 4rpx;
+  width: 24rpx;
+  height: 24rpx;
+  border-radius: 50%;
+  border: 4rpx solid #e8e8e8;
+  background-color: #fff;
+}
+
+.flow-dot.approved {
+  border-color: #52c41a;
+  background-color: #52c41a;
+}
+
+.flow-dot.rejected {
+  border-color: #ff4d4f;
+  background-color: #ff4d4f;
+}
+
+.flow-dot.pending {
+  border-color: #1890ff;
+}
+
+.flow-content {
+  flex: 1;
+}
+
+.flow-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.flow-name {
+  font-size: 28rpx;
+  color: #333;
+}
+
+.flow-status {
+  font-size: 24rpx;
+  padding: 4rpx 12rpx;
+  border-radius: 4rpx;
+}
+
+.flow-status.approved {
+  background-color: #f6ffed;
+  color: #52c41a;
+}
+
+.flow-status.rejected {
+  background-color: #fff2f0;
+  color: #ff4d4f;
+}
+
+.flow-status.pending {
+  background-color: #e6f7ff;
+  color: #1890ff;
+}
+
+.flow-time {
+  font-size: 24rpx;
+  color: #999;
+  margin-top: 8rpx;
+}
+
+.flow-opinion {
+  font-size: 26rpx;
+  color: #666;
+  margin-top: 8rpx;
+  padding: 12rpx;
+  background-color: #f5f5f5;
+  border-radius: 6rpx;
+}
+
+.cancel-btn {
+  margin-top: 40rpx;
+  background-color: #fff;
+  color: #ff4d4f;
+  border: 1rpx solid #ff4d4f;
+  border-radius: 12rpx;
+  font-size: 32rpx;
+  padding: 24rpx 0;
+}

@@ -1,0 +1,216 @@
+.container {
+  padding: 20rpx;
+}
+
+.form-item {
+  display: flex;
+  align-items: center;
+  padding: 24rpx 0;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.form-item.switch-item {
+  justify-content: space-between;
+}
+
+.form-label {
+  width: 220rpx;
+  color: #666;
+  font-size: 28rpx;
+}
+
+.form-input {
+  flex: 1;
+  font-size: 28rpx;
+  color: #333;
+}
+
+.form-input.picker {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.arrow {
+  color: #999;
+  font-size: 24rpx;
+}
+
+.location-btn {
+  margin-top: 20rpx;
+  background-color: #fff;
+  color: #1890ff;
+  border: 1rpx solid #1890ff;
+  border-radius: 8rpx;
+  font-size: 28rpx;
+  padding: 16rpx 0;
+}
+
+.group-actions {
+  margin-top: 16rpx;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btn-outline {
+  background-color: #fff;
+  color: #1890ff;
+  border: 1rpx solid #1890ff;
+  border-radius: 8rpx;
+  font-size: 26rpx;
+  padding: 12rpx 24rpx;
+}
+
+.shift-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18rpx 0;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.shift-item:last-child {
+  border-bottom: none;
+}
+
+.shift-name {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #333;
+}
+
+.shift-sub {
+  margin-top: 6rpx;
+  font-size: 24rpx;
+  color: #999;
+}
+
+.shift-actions {
+  display: flex;
+  gap: 12rpx;
+}
+
+.mini-btn {
+  font-size: 24rpx;
+  padding: 10rpx 18rpx;
+  border-radius: 8rpx;
+  background-color: #f5f5f5;
+  color: #333;
+}
+
+.mini-btn.primary {
+  background-color: #1890ff;
+  color: #fff;
+}
+
+.tip {
+  font-size: 24rpx;
+  color: #999;
+  margin: 6rpx 0 12rpx;
+}
+
+.dept-item {
+  display: flex;
+  align-items: center;
+  padding: 14rpx 0;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.dept-item:last-child {
+  border-bottom: none;
+}
+
+.dept-name {
+  margin-left: 14rpx;
+  font-size: 28rpx;
+  color: #333;
+}
+
+.submit-btn {
+  margin-top: 40rpx;
+  background-color: #1890ff;
+  color: #fff;
+  border-radius: 12rpx;
+  font-size: 32rpx;
+  padding: 24rpx 0;
+}
+
+.submit-btn.small {
+  margin-top: 20rpx;
+  font-size: 28rpx;
+  padding: 18rpx 0;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000;
+}
+
+.modal-mask {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 620rpx;
+  background-color: #fff;
+  border-radius: 16rpx;
+  overflow: hidden;
+}
+
+.modal-title {
+  text-align: center;
+  font-size: 32rpx;
+  font-weight: 600;
+  padding: 28rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.modal-body {
+  padding: 28rpx;
+}
+
+.modal-input {
+  width: 100%;
+  padding: 18rpx;
+  background-color: #f5f5f5;
+  border-radius: 10rpx;
+  font-size: 28rpx;
+  box-sizing: border-box;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 16rpx;
+  padding: 20rpx 28rpx;
+  border-top: 1rpx solid #f0f0f0;
+}
+
+.modal-btn {
+  font-size: 28rpx;
+  padding: 12rpx 28rpx;
+  border-radius: 10rpx;
+}
+
+.modal-btn.cancel {
+  background-color: #f5f5f5;
+  color: #333;
+}
+
+.modal-btn.confirm {
+  background-color: #1890ff;
+  color: #fff;
+}

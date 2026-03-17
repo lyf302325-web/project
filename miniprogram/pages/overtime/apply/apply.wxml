@@ -1,0 +1,74 @@
+<view class="container">
+  <view class="card">
+    <view class="card-title">加班信息</view>
+
+    <view class="form-item">
+      <text class="form-label">加班类型</text>
+      <picker mode="selector" range="{{overtimeTypes}}" range-key="name" bindchange="onTypeChange">
+        <view class="picker">
+          <text>{{selectedType.name || '请选择'}}</text>
+          <text class="arrow">▶</text>
+        </view>
+      </picker>
+    </view>
+
+    <view class="form-item">
+      <text class="form-label">开始日期</text>
+      <picker mode="date" value="{{startDate}}" bindchange="onStartDateChange">
+        <view class="picker">
+          <text>{{startDate || '请选择'}}</text>
+          <text class="arrow">▶</text>
+        </view>
+      </picker>
+    </view>
+    <view class="form-item">
+      <text class="form-label">开始时间</text>
+      <picker mode="time" value="{{startTime}}" bindchange="onStartTimeChange">
+        <view class="picker">
+          <text>{{startTime || '请选择'}}</text>
+          <text class="arrow">▶</text>
+        </view>
+      </picker>
+    </view>
+
+    <view class="form-item">
+      <text class="form-label">结束日期</text>
+      <picker mode="date" value="{{endDate}}" bindchange="onEndDateChange">
+        <view class="picker">
+          <text>{{endDate || '请选择'}}</text>
+          <text class="arrow">▶</text>
+        </view>
+      </picker>
+    </view>
+    <view class="form-item">
+      <text class="form-label">结束时间</text>
+      <picker mode="time" value="{{endTime}}" bindchange="onEndTimeChange">
+        <view class="picker">
+          <text>{{endTime || '请选择'}}</text>
+          <text class="arrow">▶</text>
+        </view>
+      </picker>
+    </view>
+
+    <view class="form-item textarea">
+      <text class="form-label">加班事由</text>
+      <textarea class="textarea-input" placeholder="请输入加班事由" value="{{reason}}" bindinput="onReasonInput" />
+    </view>
+  </view>
+
+  <view class="card">
+    <view class="card-title">相关凭证</view>
+    <view class="image-list">
+      <view class="img-item" wx:for="{{images}}" wx:key="index">
+        <image class="img" src="{{item}}" mode="aspectFill"></image>
+        <view class="del" bindtap="deleteImage" data-index="{{index}}">×</view>
+      </view>
+      <view class="img-add" wx:if="{{images.length < 3}}" bindtap="chooseImage">
+        <view class="add-text">+</view>
+        <view class="add-sub">{{uploading ? '上传中' : '添加'}}</view>
+      </view>
+    </view>
+  </view>
+
+  <button class="submit-btn" loading="{{loading}}" disabled="{{loading || uploading}}" bindtap="submitApply">提交申请</button>
+</view>

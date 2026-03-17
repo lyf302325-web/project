@@ -1,0 +1,47 @@
+<view class="container">
+  <!-- 申请按钮 -->
+  <view class="apply-btn" bindtap="goToApply">
+    <text>+ 发起请假申请</text>
+  </view>
+
+  <!-- 筛选标签 -->
+  <view class="filter-tabs">
+    <view class="tab {{currentTab === 'all' ? 'active' : ''}}" bindtap="switchTab" data-tab="all">全部</view>
+    <view class="tab {{currentTab === 'pending' ? 'active' : ''}}" bindtap="switchTab" data-tab="pending">审批中</view>
+    <view class="tab {{currentTab === 'approved' ? 'active' : ''}}" bindtap="switchTab" data-tab="approved">已通过</view>
+    <view class="tab {{currentTab === 'rejected' ? 'active' : ''}}" bindtap="switchTab" data-tab="rejected">已拒绝</view>
+  </view>
+
+  <!-- 请假记录列表 -->
+  <view class="list" wx:if="{{leaveList.length > 0}}">
+    <view class="list-item" wx:for="{{leaveList}}" wx:key="id" bindtap="goToDetail" data-id="{{item.id}}">
+      <view class="item-header">
+        <view class="leave-type">{{item.leaveTypeName}}</view>
+        <view class="leave-status status-tag {{item.status === 0 ? 'status-normal' : item.status === 1 ? 'status-success' : 'status-error'}}">
+          {{item.status === 0 ? '审批中' : item.status === 1 ? '已通过' : '已拒绝'}}
+        </view>
+      </view>
+      <view class="item-content">
+        <view class="info-row">
+          <text class="info-label">请假时间：</text>
+          <text class="info-value">{{item.startDate}} 至 {{item.endDate}}</text>
+        </view>
+        <view class="info-row">
+          <text class="info-label">请假天数：</text>
+          <text class="info-value">{{item.days}}天</text>
+        </view>
+        <view class="info-row">
+          <text class="info-label">请假事由：</text>
+          <text class="info-value reason">{{item.reason}}</text>
+        </view>
+      </view>
+      <view class="item-footer">
+        <text class="apply-time">申请时间：{{item.createTime}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="empty" wx:else>
+    <view class="empty-text">暂无请假记录</view>
+  </view>
+</view>

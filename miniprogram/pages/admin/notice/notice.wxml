@@ -1,0 +1,101 @@
+<view class="container">
+  <view class="card">
+    <view class="card-title">消息通知配置</view>
+    
+    <view class="form-item switch-item">
+      <view class="form-info">
+        <view class="form-label">考勤异常提醒</view>
+        <view class="form-desc">员工迟到、早退、旷工时推送提醒</view>
+      </view>
+      <switch checked="{{config.attendanceAlert}}" bindchange="onAttendanceAlertChange" color="#1890ff" />
+    </view>
+
+    <view class="form-item switch-item">
+      <view class="form-info">
+        <view class="form-label">审批结果推送</view>
+        <view class="form-desc">请假、外勤审批结果推送给员工</view>
+      </view>
+      <switch checked="{{config.approvalResult}}" bindchange="onApprovalResultChange" color="#1890ff" />
+    </view>
+
+    <view class="form-item switch-item">
+      <view class="form-info">
+        <view class="form-label">待审批提醒</view>
+        <view class="form-desc">有新的审批申请时提醒管理员</view>
+      </view>
+      <switch checked="{{config.pendingApproval}}" bindchange="onPendingApprovalChange" color="#1890ff" />
+    </view>
+
+    <view class="form-item switch-item">
+      <view class="form-info">
+        <view class="form-label">打卡提醒</view>
+        <view class="form-desc">上下班时间提醒员工打卡</view>
+      </view>
+      <switch checked="{{config.checkInReminder}}" bindchange="onCheckInReminderChange" color="#1890ff" />
+    </view>
+  </view>
+
+  <view class="card" wx:if="{{config.attendanceAlert}}">
+    <view class="card-title">考勤异常提醒规则</view>
+
+    <view class="form-item">
+      <view class="form-label">上班后未打卡提醒(分钟)</view>
+      <input class="form-input" type="number" value="{{config.missCheckInAfterMinutes}}" bindinput="onMissCheckInAfterMinutesInput" />
+    </view>
+    <view class="form-item">
+      <view class="form-label">下班后未签退提醒(分钟)</view>
+      <input class="form-input" type="number" value="{{config.missCheckOutAfterMinutes}}" bindinput="onMissCheckOutAfterMinutesInput" />
+    </view>
+
+    <view class="form-item switch-item">
+      <view class="form-info">
+        <view class="form-label">迟到提醒</view>
+      </view>
+      <switch checked="{{config.lateRemind}}" bindchange="onLateRemindChange" color="#1890ff" />
+    </view>
+    <view class="form-item switch-item">
+      <view class="form-info">
+        <view class="form-label">早退提醒</view>
+      </view>
+      <switch checked="{{config.earlyRemind}}" bindchange="onEarlyRemindChange" color="#1890ff" />
+    </view>
+    <view class="form-item switch-item">
+      <view class="form-info">
+        <view class="form-label">未打卡提醒</view>
+      </view>
+      <switch checked="{{config.missCheckInRemind}}" bindchange="onMissCheckInRemindChange" color="#1890ff" />
+    </view>
+    <view class="form-item switch-item">
+      <view class="form-info">
+        <view class="form-label">未签退提醒</view>
+      </view>
+      <switch checked="{{config.missCheckOutRemind}}" bindchange="onMissCheckOutRemindChange" color="#1890ff" />
+    </view>
+  </view>
+
+  <view class="card" wx:if="{{config.checkInReminder}}">
+    <view class="card-title">打卡提醒时间</view>
+    
+    <view class="form-item">
+      <view class="form-label">上班提醒时间</view>
+      <picker mode="time" bindchange="onMorningTimeChange" value="{{config.morningReminderTime}}">
+        <view class="form-input picker">
+          {{config.morningReminderTime || '08:50'}}
+          <text class="arrow">▶</text>
+        </view>
+      </picker>
+    </view>
+
+    <view class="form-item">
+      <view class="form-label">下班提醒时间</view>
+      <picker mode="time" bindchange="onEveningTimeChange" value="{{config.eveningReminderTime}}">
+        <view class="form-input picker">
+          {{config.eveningReminderTime || '18:00'}}
+          <text class="arrow">▶</text>
+        </view>
+      </picker>
+    </view>
+  </view>
+
+  <button class="submit-btn" bindtap="handleSubmit" loading="{{loading}}">保存配置</button>
+</view>
